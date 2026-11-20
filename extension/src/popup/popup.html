@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title data-i18n="extName"></title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <main id="dusk-popup">
+    <div class="group banner" id="paused-banner" hidden>
+      <p data-i18n="popupPausedBanner"></p>
+      <button type="button" class="link" id="resume" data-i18n="popupResume"></button>
+    </div>
+
+    <div id="state-normal" hidden>
+      <h1 class="host" id="host"></h1>
+
+      <div class="group">
+        <label class="row">
+          <span data-i18n="popupSiteToggle"></span>
+          <input type="checkbox" switch role="switch" id="site-toggle">
+        </label>
+        <div class="row">
+          <div class="segmented" id="theme" role="radiogroup" data-i18n-label="popupThemeGroup">
+            <label><input type="radio" name="theme" value="dark" data-i18n-label="popupThemeDarkLabel"><span data-i18n="popupThemeDark"></span></label>
+            <label><input type="radio" name="theme" value="midnight" data-i18n-label="popupThemeMidnightLabel"><span data-i18n="popupThemeMidnight"></span></label>
+            <label><input type="radio" name="theme" value="dim" data-i18n-label="popupThemeDimLabel"><span data-i18n="popupThemeDim"></span></label>
+          </div>
+        </div>
+        <p class="row caption" id="theme-caption" hidden>
+          <span id="theme-only-on"></span>
+          <button type="button" class="link" id="theme-default" data-i18n="popupThemeUseDefault"></button>
+        </p>
+        <label class="row" id="dim-row">
+          <span data-i18n="popupDimToggle"></span>
+          <input type="checkbox" switch role="switch" id="dim-toggle">
+        </label>
+      </div>
+
+      <div class="group" id="native-group" hidden>
+        <p class="row caption" id="native-overridden" data-i18n="popupNativeOverridden" role="status" hidden></p>
+        <label class="row">
+          <span data-i18n="popupNativeToggle"></span>
+          <input type="checkbox" switch role="switch" id="native-toggle">
+        </label>
+        <p class="row caption" id="native-caption" hidden></p>
+        <p class="row" id="native-text" role="status" hidden></p>
+      </div>
+    </div>
+
+    <div class="state-message" id="state-no-access" hidden>
+      <h1 data-i18n="popupNoAccessTitle"></h1>
+      <p data-i18n="popupNoAccessBody"></p>
+    </div>
+
+    <div class="state-message" id="state-unsupported" hidden>
+      <p data-i18n="popupUnsupported"></p>
+    </div>
+
+    <div class="group" id="footer" hidden>
+      <label class="row">
+        <span data-i18n="popupPauseEverywhere"></span>
+        <input type="checkbox" switch role="switch" id="pause-toggle">
+      </label>
+      <button type="button" class="row action" id="report" data-i18n="popupReport" hidden></button>
+    </div>
+  </main>
+</body>
+</html>

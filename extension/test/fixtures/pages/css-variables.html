@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CSS variables</title>
+<!-- Light fixture: every color comes through custom properties, including chains, fallbacks, scoped overrides and
+     variables used inside gradients, borders and shorthands. -->
+<style>
+  :root {
+    --white: #ffffff;
+    --grey-50: #f8f9fa;
+    --grey-200: #e9ecef;
+    --grey-700: #495057;
+    --grey-900: #212529;
+    --blue: #0d6efd;
+    --surface: var(--white);
+    --surface-alt: var(--grey-50);
+    --text: var(--grey-900);
+    --muted: var(--grey-700);
+    --border: 1px solid var(--grey-200);
+    --accent-rgb: 13, 110, 253;
+    --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  html, body { margin: 0; background: var(--surface); color: var(--text); font: 16px/1.5 system-ui, sans-serif; }
+  .nav { background: var(--surface-alt); border-bottom: var(--border); padding: 12px 24px; }
+  .nav a { color: var(--blue); margin-right: 12px; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  .card { background: var(--surface); border: var(--border); box-shadow: var(--shadow); padding: 16px; margin: 16px 0; }
+  .card p { color: var(--muted); }
+  .badge { background: rgba(var(--accent-rgb), 0.12); color: var(--blue); padding: 2px 8px; border-radius: 999px; }
+  .missing { background: var(--not-defined, #fdfdfe); color: var(--also-missing, #333333); padding: 12px; }
+  .scoped { --surface: #f1f3f5; --text: #343a40; background: var(--surface); color: var(--text); padding: 12px; }
+  .hero { background: linear-gradient(180deg, var(--white), var(--grey-50)); padding: 32px 24px; border-bottom: var(--border); }
+  .hero h1 { margin: 0; color: var(--text); }
+  @media (min-width: 1px) { :root { --panel: #fcfcfd; } }
+  .panel { background-color: var(--panel); border: var(--border); padding: 12px; }
+</style>
+</head>
+<body>
+<nav class="nav"><a href="#">Docs</a><a href="#">API</a><a href="#">Blog</a></nav>
+<section class="hero"><h1>Variables everywhere</h1><p>Colors resolve through two or three levels of custom properties.</p></section>
+<main>
+  <div class="card"><h2>Card title <span class="badge">new</span></h2><p>Muted body text from a variable chain.</p></div>
+  <div class="missing">Fallback values when the variable is undefined.</div>
+  <div class="scoped">A component that redefines --surface and --text locally.</div>
+  <div class="panel">Variable defined inside a media query.</div>
+  <div class="card" style="--surface: #fafbfc"><p>Inline custom property override on this card.</p></div>
+</main>
+</body>
+</html>

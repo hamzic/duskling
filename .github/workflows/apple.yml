@@ -1,0 +1,91 @@
+name: apple
+
+on:
+  push:
+    paths: ["apple/**", "extension/**", "shared/**", ".github/workflows/apple.yml"]
+  pull_request:
+    paths: ["apple/**", "extension/**", "shared/**", ".github/workflows/apple.yml"]
+
+# Security: see the comment in extension.yml.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    timeout-minutes: 60
+    # actions/runner-images README: `macos-26` is the macOS 26 Arm64 image; its image README lists Xcode 26.0.1–26.6
+    # (26.6 default) and iOS 26.x simulators.
+    # https://github.com/actions/runner-images/blob/main/README.md
+    # https://github.com/actions/runner-images/blob/main/images/macos/macos-26-arm64-Readme.md
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The image has several Xcode 26 versions installed side by side, so `Xcode_26*.app` would expand to more than one
+      # path. Pin the one the project is verified with.
+      - run: sudo xcode-select -s /Applications/Xcode_26.6.app
+      - run: xcodebuild -version
+      # XcodeGen 2.46.0 release zip, pinned by SHA-256 instead of the moving Homebrew formula.
+      # https://github.com/yonaskolb/XcodeGen/releases/tag/2.46.0
+      - name: Install XcodeGen
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/xcodegen.zip" https://github.com/yonaskolb/XcodeGen/releases/download/2.46.0/xcodegen.zip
+          echo "4d9e34b62172d645eed6457cac13fc222569974098ef4ee9c3368bedf0196806  $RUNNER_TEMP/xcodegen.zip" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/xcodegen.zip" -d "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/xcodegen/bin" >> "$GITHUB_PATH"
+      # Installs the pnpm version named in extension/package.json's packageManager field.
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          package_json_file: extension/package.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: extension/pnpm-lock.yaml
+      - run: apple/scripts/build-extension.sh
+      - run: xcodegen generate
+        working-directory: apple
+      - name: Pick the newest iPhone and iPad simulators
+        run: |
+          pick() {
+            xcrun simctl list devices available --json | jq -r --arg kind "$1" '
+              [.devices | to_entries[] | select(.key | test("SimRuntime\\.iOS-"))
+               | (.key | capture("iOS-(?<maj>[0-9]+)-(?<min>[0-9]+)") | [(.maj | tonumber), (.min | tonumber)]) as $v
+               | .value[] | select(.name | startswith($kind)) | {udid, name, v: $v}]
+              | sort_by(.v) | last | .udid'
+          }
+          IPHONE_ID=$(pick iPhone); IPAD_ID=$(pick iPad)
+          test -n "$IPHONE_ID" && test "$IPHONE_ID" != null && test -n "$IPAD_ID" && test "$IPAD_ID" != null
+          echo "IPHONE_ID=$IPHONE_ID" >> "$GITHUB_ENV"
+          echo "IPAD_ID=$IPAD_ID" >> "$GITHUB_ENV"
+          xcrun simctl list devices available | grep -E "$IPHONE_ID|$IPAD_ID"
+      - name: Unit and UI tests (iPhone)
+        working-directory: apple
+        run: >
+          xcodebuild test -project Dusk.xcodeproj -scheme Dusk
+          -destination "platform=iOS Simulator,id=$IPHONE_ID"
+          -resultBundlePath "$RUNNER_TEMP/iphone.xcresult"
+          -derivedDataPath "$RUNNER_TEMP/dd"
+          CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=-
+      # The build above wrote the app's .stringsdata; fail if Localizable.xcstrings no longer matches the code.
+      - run: apple/scripts/check-strings.sh "$RUNNER_TEMP/dd"
+      # On the iPad: the unit tests, LaunchUITests and the split-view UI test.
+      - name: Unit tests, launch and split-view UI tests (iPad)
+        working-directory: apple
+        run: >
+          xcodebuild test -project Dusk.xcodeproj -scheme Dusk
+          -destination "platform=iOS Simulator,id=$IPAD_ID"
+          -resultBundlePath "$RUNNER_TEMP/ipad.xcresult"
+          -only-testing:DuskTests -only-testing:DuskUITests/LaunchUITests -only-testing:DuskUITests/SplitViewUITests
+          CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=-
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: xcresult
+          path: ${{ runner.temp }}/*.xcresult
+          if-no-files-found: ignore

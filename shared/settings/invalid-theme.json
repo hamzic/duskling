@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "global": {
+    "enabled": { "value": true, "updatedAt": 0 },
+    "theme": { "value": "neon", "updatedAt": 0 },
+    "respectNativeDark": { "value": true, "updatedAt": 0 },
+    "dimImages": { "value": false, "updatedAt": 0 }
+  },
+  "sites": {}
+}

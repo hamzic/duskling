@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "global": {
+    "enabled": { "value": false, "updatedAt": 1760000000001 },
+    "theme": { "value": "midnight", "updatedAt": 1760000000002 },
+    "respectNativeDark": { "value": false, "updatedAt": 1760000000003 },
+    "dimImages": { "value": true, "updatedAt": 1760000000004 }
+  },
+  "sites": {
+    "example.com": { "mode": "gentle", "theme": "dim", "nativeDark": "ignore", "updatedAt": 1760000000010 },
+    "news.example.com": { "mode": "filter", "dimImages": false, "updatedAt": 1760000000011 },
+    "gone.example.org": { "updatedAt": 1760000000012, "deleted": true }
+  }
+}

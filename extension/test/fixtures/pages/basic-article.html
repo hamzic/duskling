@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basic article</title>
+<!-- Light fixture: a plain article with hard-coded light colors in one stylesheet. -->
+<style>
+  html { background: #ffffff; }
+  body { margin: 0; font: 17px/1.6 Georgia, serif; color: #1f1f1f; background: #ffffff; }
+  header { background: #f4f4f4; border-bottom: 1px solid #dddddd; padding: 12px 24px; }
+  header a { color: #0b57d0; margin-right: 16px; text-decoration: none; }
+  main { max-width: 680px; margin: 0 auto; padding: 24px; }
+  h1 { color: #111111; font-size: 34px; line-height: 1.2; }
+  .byline { color: #666666; font-size: 14px; }
+  blockquote { margin: 24px 0; padding: 12px 20px; border-left: 4px solid #cccccc; background: #fafafa; color: #444444; }
+  code { background: #eeeeee; color: #c7254e; padding: 1px 4px; border-radius: 3px; }
+  pre { background: #f6f8fa; color: #24292f; padding: 12px; overflow: auto; }
+  aside { background: #fff8e1; border: 1px solid #ffe082; color: #5d4300; padding: 12px; }
+  a { color: #1a0dab; }
+  footer { background: #f0f0f0; color: #555555; padding: 24px; text-align: center; font-size: 14px; }
+  hr { border: 0; border-top: 1px solid #e0e0e0; }
+</style>
+</head>
+<body>
+<header><a href="#">Home</a><a href="#">World</a><a href="#">Science</a><a href="#">Opinion</a></header>
+<main>
+  <article>
+    <h1>The quiet hours after sunset</h1>
+    <p class="byline">By A. Writer · 6 min read</p>
+    <p>Dusk is the part of twilight that ends when the sun is six degrees below the horizon. Reading in that light is
+      easier when pages follow along, which is what this fixture checks: plain paragraphs, links like
+      <a href="#">this one</a>, and some <code>inline code</code>.</p>
+    <blockquote>Light is a matter of degree; so is darkness.</blockquote>
+    <p>Most articles are this simple. A white body, near-black text, a few grey rules and the occasional highlighted
+      note. Every color here is a literal in the stylesheet, so the CSS rewrite sees all of them.</p>
+    <pre>function dusk() {
+  return "themed";
+}</pre>
+    <aside><strong>Note:</strong> amber callouts must stay readable and keep their hue.</aside>
+    <hr>
+    <p>Closing paragraph with <em>emphasis</em>, <strong>strong text</strong> and a <a href="#">final link</a>.</p>
+  </article>
+</main>
+<footer>© The Duskling Authors · Fixture page</footer>
+</body>
+</html>

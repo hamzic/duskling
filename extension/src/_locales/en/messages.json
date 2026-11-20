@@ -1,0 +1,44 @@
+{
+  "extName": { "message": "Duskling", "description": "Extension name" },
+  "extDescription": {
+    "message": "Dark mode for every website. Free, private, open source.",
+    "description": "Extension description"
+  },
+  "popupSiteToggle": { "message": "Dark mode on this site", "description": "Popup: per-site switch" },
+  "popupThemeGroup": { "message": "Theme", "description": "Popup: accessible name of the theme segmented control" },
+  "popupThemeDark": { "message": "Dark", "description": "Popup: theme segment" },
+  "popupThemeMidnight": { "message": "Midnight", "description": "Popup: theme segment" },
+  "popupThemeDim": { "message": "Dim", "description": "Popup: theme segment" },
+  "popupThemeDarkLabel": { "message": "Dark theme", "description": "Popup: VoiceOver label of the Dark segment" },
+  "popupThemeMidnightLabel": { "message": "Midnight theme", "description": "Popup: VoiceOver label of the Midnight segment" },
+  "popupThemeDimLabel": { "message": "Dim theme", "description": "Popup: VoiceOver label of the Dim segment" },
+  "popupThemeOnlyOn": {
+    "message": "Only on $HOST$",
+    "description": "Popup: caption when this site has its own theme",
+    "placeholders": { "host": { "content": "$1", "example": "nytimes.com" } }
+  },
+  "popupThemeUseDefault": { "message": "Use default", "description": "Popup: removes this site's theme override" },
+  "popupDimToggle": { "message": "Dim images", "description": "Popup: per-site switch; overrides the app's Dim images setting for this site" },
+  "popupNativeUsed": { "message": "This site has its own dark theme.", "description": "Popup: native-dark notice" },
+  "popupNativeToggle": { "message": "Use this site's dark theme", "description": "Popup: per-site switch; off themes the site with Duskling even when it has its own dark theme" },
+  "popupNativeSetOn": {
+    "message": "Set on $HOST$",
+    "description": "Popup: caption under the disabled native switch when a parent domain's rule ignores the site's own dark theme",
+    "placeholders": { "host": { "content": "$1", "example": "example.com" } }
+  },
+  "popupNativeOverridden": {
+    "message": "This site's dark theme looks light, so Duskling darkens it. Turn on to use the site's theme.",
+    "description": "Popup: caption above the native switch when the site declares a dark theme but paints light"
+  },
+  "popupNativeIgnored": { "message": "Using Duskling's theme.", "description": "Popup: native-dark notice after override" },
+  "popupPauseEverywhere": { "message": "Pause everywhere", "description": "Popup: global pause switch" },
+  "popupPausedBanner": { "message": "Paused everywhere", "description": "Popup: banner while paused" },
+  "popupResume": { "message": "Resume", "description": "Popup: ends the global pause" },
+  "popupReport": { "message": "Report a problem with this site", "description": "Popup: opens an email draft" },
+  "popupNoAccessTitle": { "message": "Duskling can't see this page yet.", "description": "Popup: no permission for this page" },
+  "popupNoAccessBody": {
+    "message": "Tap the puzzle icon in the address bar, choose Duskling, then Always Allow on Every Website.",
+    "description": "Popup: how to grant permission"
+  },
+  "popupUnsupported": { "message": "Dark mode isn't available on this page.", "description": "Popup: about:, extension or App Store pages" }
+}

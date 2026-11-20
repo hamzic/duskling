@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Images</title>
+<!-- Image classifier cases: a photo (never changed), a dark monochrome logo on transparent (inverted), a
+     colored brand mark (never inverted), inline SVG icons, CSS background-image icons (PNG sprite and SVG), a mask-image
+     icon, a large light image, and a cross-origin image from origin B without CORS headers. -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #222222; font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 24px; }
+  .row { display: flex; gap: 24px; align-items: center; margin: 16px 0; flex-wrap: wrap; }
+  .icon-svg-bg { display: inline-block; width: 24px; height: 24px; background: url("assets/icon-dark.svg") no-repeat center / 24px 24px; }
+  .sprite { display: inline-block; width: 16px; height: 16px; background-image: url("assets/sprite.png"); background-repeat: no-repeat; }
+  .sprite.search { background-position: 0 0; }
+  .sprite.menu { background-position: -16px 0; }
+  .sprite.close { background-position: -32px 0; }
+  .mask { display: inline-block; width: 24px; height: 24px; background-color: #1b1b1f;
+          -webkit-mask: url("assets/icon-dark.svg") center / contain no-repeat; mask: url("assets/icon-dark.svg") center / contain no-repeat; }
+  figure { margin: 0; }
+  figcaption { color: #555555; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Images</h1>
+  <figure><img id="photo" src="assets/photo.png" width="320" height="200" alt="Gradient photo"><figcaption>Photo: must stay untouched.</figcaption></figure>
+  <div class="row">
+    <img id="logo-dark" src="assets/logo-dark.png" width="120" height="40" alt="Dark wordmark">
+    <img id="logo-brand" src="assets/logo-brand.png" width="40" height="40" alt="Brand mark">
+    <img id="logo-cross" src="http://localhost:4101/assets/logo-dark.png" width="120" height="40" alt="Cross-origin wordmark">
+  </div>
+  <div class="row" aria-label="inline svg icons">
+    <svg id="svg-dark" width="24" height="24" viewBox="0 0 24 24"><path fill="#1b1b1f" d="M12 3l9 8h-3v9h-4v-6h-4v6H6v-9H3z"/></svg>
+    <svg id="svg-current" width="24" height="24" viewBox="0 0 24 24" style="color: #202124"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <svg id="svg-brand" width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#e8453c"/></svg>
+  </div>
+  <div class="row" aria-label="css icons">
+    <span id="bg-svg" class="icon-svg-bg" title="SVG background-image icon"></span>
+    <span class="sprite search" title="sprite search"></span>
+    <span class="sprite menu" title="sprite menu"></span>
+    <span class="sprite close" title="sprite close"></span>
+    <span class="mask" title="mask-image icon"></span>
+  </div>
+  <img id="banner" src="assets/light-banner.png" width="800" height="120" alt="Light banner">
+  <p>Text after the images.</p>
+</main>
+</body>
+</html>

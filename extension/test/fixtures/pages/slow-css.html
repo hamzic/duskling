@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Slow CSS</title>
+<!-- The white body comes from an external stylesheet delayed by 1 s, added after the first frame (like code-split CSS):
+     Playwright WebKit doesn't render at all while a stylesheet added before load is pending (measured for a parser
+     <link> in head, a script-inserted one in head and one at the end of body: first frame at ~1,010 ms), so a stylesheet
+     already pending at first paint would leave no frame to look at. Duskling must keep the page dark meanwhile. -->
+<script>
+  // A synchronous head script: the pre-paint style must already be in place when the first page script runs.
+  window.__prepaintAtFirstScript = !!document.querySelector('style[data-dusk^="prepaint"]');
+</script>
+</head>
+<body>
+<main style="max-width: 720px; margin: 0 auto; padding: 24px; font: 16px/1.5 system-ui, sans-serif">
+  <h1>Waiting for CSS</h1>
+  <div class="panel" style="padding: 16px">The stylesheet arrives after one second.</div>
+  <p>Body text.</p>
+</main>
+<script>
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const slow = document.createElement("link");
+    slow.rel = "stylesheet";
+    slow.href = "assets/slow.css?delay=1000";
+    document.head.append(slow);
+  }));
+</script>
+</body>
+</html>

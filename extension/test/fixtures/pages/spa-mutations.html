@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SPA mutations</title>
+<!-- Light fixture: a client-side router that swaps the main content, adds <style> elements per view, toggles classes and
+     writes inline styles. window.swap() performs one navigation; window.swapCount reports how many ran. -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #202124; font: 16px/1.5 system-ui, sans-serif; }
+  nav { background: #f8f9fa; border-bottom: 1px solid #dadce0; padding: 12px 24px; }
+  nav button { background: #ffffff; color: #1a73e8; border: 1px solid #dadce0; padding: 6px 12px; border-radius: 4px; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px; }
+  .view { background: #ffffff; border: 1px solid #e8eaed; padding: 16px; border-radius: 8px; }
+  .view.alt { background: #fcfcfc; }
+  .item { border-bottom: 1px solid #f1f3f4; padding: 8px 0; color: #3c4043; }
+</style>
+</head>
+<body>
+<nav><button id="next" type="button">Next view</button></nav>
+<main id="app"></main>
+<script>
+  const VIEWS = ["Inbox", "Starred", "Sent", "Drafts", "Archive"];
+  window.swapCount = 0;
+  window.swap = () => {
+    const n = window.swapCount++;
+    const name = VIEWS[n % VIEWS.length];
+    const app = document.getElementById("app");
+    app.replaceChildren();
+    const view = document.createElement("section");
+    view.className = "view" + (n % 2 ? " alt" : "");
+    view.innerHTML = `<h2>${name}</h2>` + Array.from({ length: 6 }, (_, i) => `<div class="item v${n % 5}">${name} item ${i + 1}</div>`).join("");
+    const badge = document.createElement("span");
+    badge.textContent = `view ${n}`;
+    badge.style.cssText = "background:#f1f3f4;color:#3c4043;padding:2px 8px;border-radius:10px";
+    view.querySelector("h2").append(" ", badge);
+    app.append(view);
+    // One stylesheet per view kind, replaced on each navigation (like code-split CSS).
+    let s = document.getElementById("view-css");
+    if (!s) { s = document.createElement("style"); s.id = "view-css"; document.head.append(s); }
+    s.textContent = `.v${n % 5} { background: #fdfdfd; } .view h2 { color: #111111; }`;
+  };
+  document.getElementById("next").addEventListener("click", window.swap);
+  window.swap();
+</script>
+</body>
+</html>

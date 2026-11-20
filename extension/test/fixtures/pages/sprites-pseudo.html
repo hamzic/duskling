@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sprites and pseudo-element icons</title>
+<!-- Dark icons drawn as ::before/::after background images (SVG file, data: URL SVG) and as CSS sprites cut from a PNG
+     sheet with background-position. The classifier works at rule level, so the icon host elements never get a filter. -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #222222; font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px; }
+  ul { list-style: none; padding: 0; }
+  li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #eeeeee; }
+  .home::before { content: ""; display: inline-block; width: 24px; height: 24px; background: url("assets/icon-dark.svg") center / 24px no-repeat; }
+  .star::before { content: ""; display: inline-block; width: 24px; height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23141414' d='M12 2l3 7h7l-5.5 4.5 2 7.5-6.5-4.5-6.5 4.5 2-7.5L2 9h7z'/%3E%3C/svg%3E"); }
+  .ext::after { content: ""; display: inline-block; width: 16px; height: 16px; margin-left: 4px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23202020' stroke-width='2' d='M6 3H3v10h10v-3M9 2h5v5M14 2L7 9'/%3E%3C/svg%3E") no-repeat; }
+  .ico { display: inline-block; width: 16px; height: 16px; background: url("assets/sprite.png") no-repeat; }
+  .ico-search { background-position: 0 0; }
+  .ico-menu { background-position: -16px 0; }
+  .ico-close { background-position: -32px 0; }
+  .ico-plus { background-position: -48px 0; }
+  .btn-close::before { content: ""; display: inline-block; width: 16px; height: 16px; background: url("assets/sprite.png") -32px 0 no-repeat; vertical-align: middle; margin-right: 6px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Icons from CSS</h1>
+  <ul>
+    <li class="home" id="icon-home">Home (::before, SVG file)</li>
+    <li class="star" id="icon-star">Favorites (::before, data: SVG)</li>
+    <li><a class="ext" id="icon-ext" href="#">External link (::after)</a></li>
+    <li><span class="ico ico-search" id="sprite-search"></span> Search (sprite)</li>
+    <li><span class="ico ico-menu" id="sprite-menu"></span> Menu (sprite)</li>
+    <li><span class="ico ico-close" id="sprite-close"></span> Close (sprite)</li>
+    <li><span class="ico ico-plus" id="sprite-plus"></span> Add (sprite)</li>
+    <li><button class="btn-close" id="btn-close" type="button">Close (::before sprite)</button></li>
+  </ul>
+</main>
+</body>
+</html>

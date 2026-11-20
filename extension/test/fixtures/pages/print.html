@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Print</title>
+<!-- No inline styles: screen and print rules differ. Every injected Duskling style is media="screen", so printing must look
+     exactly like the unthemed page. -->
+<style>
+  body { margin: 0; background: #ffffff; color: #222222; font: 16px/1.5 Georgia, serif; }
+  header { background: #f3f3f3; padding: 12px 24px; border-bottom: 1px solid #dddddd; }
+  main { max-width: 680px; margin: 0 auto; padding: 24px; }
+  .note { background: #fff4ce; color: #4d3800; padding: 12px; }
+  @media print {
+    header { background: #ffffff; border-bottom: 2px solid #000000; }
+    .note { background: #eeeeee; color: #000000; }
+    .screen-only { display: none; }
+  }
+</style>
+</head>
+<body>
+<header>Printable article</header>
+<main>
+  <h1>Printing stays light</h1>
+  <p>This paragraph prints in black on white.</p>
+  <p class="note">A note with a print-specific background.</p>
+  <p class="screen-only">Only visible on screen.</p>
+</main>
+</body>
+</html>

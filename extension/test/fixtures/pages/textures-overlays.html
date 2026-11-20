@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Textures and overlays</title>
+<!-- Light fixture: light repeating textures, a large light decorative image and light overlay gradients on top of
+     images (light texture/tile, gradients). -->
+<style>
+  html, body { margin: 0; color: #2a2a2a; font: 16px/1.5 system-ui, sans-serif; }
+  body { background: #fafafa url("assets/texture.png") repeat; }
+  .banner { height: 120px; background: url("assets/light-banner.png") center / cover no-repeat; display: flex; align-items: center; padding: 0 24px; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  .hero { background: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.96)), url("assets/photo.png") center / cover; padding: 48px 24px; border-radius: 12px; }
+  .paper { background: #ffffff url("assets/texture.png"); border: 1px solid #e6e6e6; padding: 16px; margin: 16px 0; }
+  .fade { background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.9)); padding: 16px; border: 1px solid #ececec; }
+  .sheen { position: relative; background: #f3f3f3; padding: 16px; margin-top: 16px; overflow: hidden; }
+  .sheen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.7) 50%, transparent 70%); pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="banner"><strong>Light banner image</strong></div>
+<main>
+  <section class="hero"><h1>White overlay on a photo</h1><p>The overlay gradient is nearly opaque white.</p></section>
+  <div class="paper"><h2>Paper texture</h2><p>A white card with a repeating light texture.</p></div>
+  <div class="fade">Radial light overlay.</div>
+  <div class="sheen">Pseudo-element sheen overlay.</div>
+</main>
+</body>
+</html>

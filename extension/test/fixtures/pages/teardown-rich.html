@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" class="page"><head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#3366ff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#112233">
+<title>Teardown fixture</title>
+<style>
+:root { --surface: #ffffff; --ink: #222; --accent: rgb(0 102 204); }
+html, body { margin: 0; background: var(--surface); color: var(--ink); }
+.card { background-color: #f7f7f7; border: 1px solid #ddd; padding: 8px; transition: background-color 1s; }
+.btn { background: linear-gradient(#fff, #eee); color: var(--accent); box-shadow: 0 1px 2px #ccc; }
+.icon { width: 16px; height: 16px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%23111'/%3E%3C/svg%3E"); }
+@media (prefers-color-scheme: dark) { .btn { color: #9cf; } }
+@media print { .card { background: white; } }
+</style>
+<link rel="stylesheet" href="data:text/css,.linked%7Bcolor:%23333;background:%23fafafa%7D">
+</head>
+<body>
+<header class="card" style="position: sticky; top: 0; background-color: #fff; color: #111">Header</header>
+<p class="linked" style="--local: #fefefe; background: var(--local)">Inline custom property</p>
+<table bgcolor="#ffffee"><tr><td bgcolor="white">cell</td><td><font color="#333333">font</font></td></tr></table>
+<svg width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="#000"/><circle cx="12" cy="12" r="6" stroke="black" fill="none"/></svg>
+<svg width="16" height="16"><rect width="16" height="16"/></svg>
+<button class="btn">Button</button>
+<span class="icon"></span>
+<img alt="logo" width="16" height="16" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23000'/%3E%3C/svg%3E">
+<div style="width: 20px; height: 20px; background-color: rgb(230, 40, 40)"></div>
+<div class="card" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=')">texture</div>
+<iframe srcdoc="<!doctype html><style>body{background:#fff;color:#000}</style><p style='color:#444'>framed</p>" width="200" height="60"></iframe>
+<div id="host"></div>
+<input placeholder="Search">
+</body></html>

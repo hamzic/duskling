@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8">
+<title>Already dark</title>
+<!-- An already-dark site (dark-sites class, signal 5): dark literal colors, no scheme declaration. Sampling should
+     find it dark and leave it alone. -->
+<style>
+  html, body { margin: 0; background: #0f1115; color: #d7dae0; font: 16px/1.5 system-ui, sans-serif; }
+  header { background: #161a20; border-bottom: 1px solid #262b33; padding: 12px 24px; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px; }
+  .card { background: #181c23; border: 1px solid #2a2f38; padding: 16px; margin-bottom: 16px; border-radius: 8px; }
+  a { color: #7aa2f7; }
+  code { background: #232833; color: #e0af68; padding: 1px 4px; }
+</style>
+</head>
+<body>
+<header>Already dark</header>
+<main>
+  <div class="card"><h2>Dark by design</h2><p>This page ships dark colors only. <a href="#">Link</a> and <code>code</code>.</p></div>
+  <div class="card"><p>No overrides should be added here.</p></div>
+</main>
+</body>
+</html>

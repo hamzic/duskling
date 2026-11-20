@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Canvas and video</title>
+<!-- Media elements stay untouched: a canvas drawn by script and a video with a poster image, on a light page. -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #222222; font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  canvas, video { display: block; border: 1px solid #dddddd; margin: 12px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Canvas and video</h1>
+  <canvas id="chart" width="400" height="160"></canvas>
+  <video id="video" width="320" height="200" poster="assets/photo.png" controls muted></video>
+  <p>Text below the media.</p>
+</main>
+<script>
+  const c = document.getElementById("chart").getContext("2d");
+  c.fillStyle = "#ffffff"; c.fillRect(0, 0, 400, 160);
+  c.fillStyle = "#4285f4"; c.fillRect(20, 60, 60, 80);
+  c.fillStyle = "#ea4335"; c.fillRect(100, 30, 60, 110);
+  c.fillStyle = "#fbbc05"; c.fillRect(180, 90, 60, 50);
+  c.fillStyle = "#34a853"; c.fillRect(260, 50, 60, 90);
+  c.fillStyle = "#333333"; c.font = "14px system-ui"; c.fillText("Canvas drawn by script", 20, 24);
+</script>
+</body>
+</html>

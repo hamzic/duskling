@@ -1,0 +1,1272 @@
+[
+  {
+    "name": "identical defaults",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    }
+  },
+  {
+    "name": "newer global theme wins (a)",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "midnight",
+          "updatedAt": 200
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 100
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "midnight",
+          "updatedAt": 200
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    }
+  },
+  {
+    "name": "newer global enabled wins (b)",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": false,
+          "updatedAt": 50
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": false,
+          "updatedAt": 50
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    }
+  },
+  {
+    "name": "global fields merge independently",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dim",
+          "updatedAt": 10
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": false,
+          "updatedAt": 20
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": false,
+          "updatedAt": 20
+        },
+        "theme": {
+          "value": "dim",
+          "updatedAt": 10
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    }
+  },
+  {
+    "name": "global tie: larger canonical JSON wins (midnight > dim)",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dim",
+          "updatedAt": 5
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "midnight",
+          "updatedAt": 5
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "midnight",
+          "updatedAt": 5
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    }
+  },
+  {
+    "name": "global boolean tie: true beats false",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": false,
+          "updatedAt": 5
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 5
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 5
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    }
+  },
+  {
+    "name": "sites are unioned",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "gentle",
+          "updatedAt": 10
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "y.com": {
+          "theme": "dim",
+          "updatedAt": 11
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "gentle",
+          "updatedAt": 10
+        },
+        "y.com": {
+          "theme": "dim",
+          "updatedAt": 11
+        }
+      }
+    }
+  },
+  {
+    "name": "newer site rule wins",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "gentle",
+          "updatedAt": 10
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "off",
+          "updatedAt": 20
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "off",
+          "updatedAt": 20
+        }
+      }
+    }
+  },
+  {
+    "name": "newer tombstone beats older live rule",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "full",
+          "updatedAt": 10
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 20,
+          "deleted": true
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 20,
+          "deleted": true
+        }
+      }
+    }
+  },
+  {
+    "name": "newer live rule beats older tombstone",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 30,
+          "deleted": true
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "filter",
+          "updatedAt": 40
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "filter",
+          "updatedAt": 40
+        }
+      }
+    }
+  },
+  {
+    "name": "site tie: larger canonical JSON wins (gentle > filter)",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "gentle",
+          "updatedAt": 7
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "filter",
+          "updatedAt": 7
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "gentle",
+          "updatedAt": 7
+        }
+      }
+    }
+  },
+  {
+    "name": "site tie: live rule beats tombstone",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 9,
+          "deleted": true
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "off",
+          "updatedAt": 9
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "mode": "off",
+          "updatedAt": 9
+        }
+      }
+    }
+  },
+  {
+    "name": "site tie: whole rule wins, fields are not merged",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "theme": "dim",
+          "updatedAt": 3
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "theme": "dim",
+          "nativeDark": "ignore",
+          "updatedAt": 3
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "theme": "dim",
+          "updatedAt": 3
+        }
+      }
+    }
+  },
+  {
+    "name": "identical tombstones",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 5,
+          "deleted": true
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 5,
+          "deleted": true
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 5,
+          "deleted": true
+        }
+      }
+    }
+  },
+  {
+    "name": "tombstone-only side is kept in union",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 5,
+          "deleted": true
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "x.com": {
+          "updatedAt": 5,
+          "deleted": true
+        }
+      }
+    }
+  },
+  {
+    "name": "combined global, union and conflict",
+    "a": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": true,
+          "updatedAt": 9
+        }
+      },
+      "sites": {
+        "a.com": {
+          "mode": "off",
+          "updatedAt": 1
+        },
+        "b.com": {
+          "theme": "dim",
+          "updatedAt": 8
+        }
+      }
+    },
+    "b": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dim",
+          "updatedAt": 2
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 4
+        }
+      },
+      "sites": {
+        "b.com": {
+          "theme": "midnight",
+          "updatedAt": 6
+        },
+        "c.com": {
+          "updatedAt": 3,
+          "deleted": true
+        }
+      }
+    },
+    "expected": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dim",
+          "updatedAt": 2
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": true,
+          "updatedAt": 9
+        }
+      },
+      "sites": {
+        "a.com": {
+          "mode": "off",
+          "updatedAt": 1
+        },
+        "b.com": {
+          "theme": "dim",
+          "updatedAt": 8
+        },
+        "c.com": {
+          "updatedAt": 3,
+          "deleted": true
+        }
+      }
+    }
+  }
+]

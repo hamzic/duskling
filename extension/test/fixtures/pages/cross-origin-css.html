@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cross-origin CSS</title>
+<!-- Light fixture: the only stylesheet comes from origin B (no CORS headers), so cssRules throws and the engine has to
+     refetch the text through the background fetchResource. -->
+<link rel="stylesheet" href="http://localhost:4101/assets/cross-origin.css">
+</head>
+<body style="margin: 0; font: 16px/1.5 system-ui, sans-serif">
+<div class="banner" style="padding: 12px 24px">Banner from a cross-origin sheet</div>
+<main style="max-width: 720px; margin: 0 auto; padding: 24px">
+  <div class="card" style="padding: 16px; margin-bottom: 16px"><h2>Cross-origin card</h2><p>Styled only by the external sheet. <a href="#">Link</a></p></div>
+  <div class="card" style="padding: 16px"><p>A second card.</p></div>
+</main>
+</body>
+</html>

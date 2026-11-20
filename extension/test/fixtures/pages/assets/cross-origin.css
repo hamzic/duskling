@@ -1,0 +1,6 @@
+/* Served from origin B (no CORS headers): the engine can't read cssRules and must refetch through the background. */
+body { background: #ffffff; color: #202124; }
+.card { background: #f8f9fa; border: 1px solid #dadce0; color: #3c4043; }
+.card h2 { color: #1a1a1a; }
+.card a { color: #1a73e8; }
+.banner { background-color: #e8f0fe; color: #174ea6; }

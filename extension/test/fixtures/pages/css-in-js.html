@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CSS-in-JS</title>
+<!-- Light fixture: styles arrive after load through CSSOM calls only (insertRule into an empty <style>, a nested
+     @media rule, a constructed sheet in document.adoptedStyleSheets), the way JSS, emotion and styled-components work. -->
+<style id="jss"></style>
+</head>
+<body>
+<div class="App-root">
+  <header class="App-header">CSS-in-JS app</header>
+  <main class="App-main">
+    <section class="App-card"><h2>Inserted rules</h2><p class="App-text">These styles exist only in the CSSOM.</p></section>
+    <section class="App-card"><h2>Adopted sheet</h2><p class="App-note">This note is styled by a constructed stylesheet.</p></section>
+    <button class="App-button">Action</button>
+  </main>
+</div>
+<script>
+  window.addEventListener("load", () => {
+    const sheet = document.getElementById("jss").sheet;
+    [
+      "html, body { margin: 0; background: #ffffff; color: #1d1d1f; font: 16px/1.5 system-ui, sans-serif; }",
+      ".App-header { background: #f5f5f7; border-bottom: 1px solid #d2d2d7; padding: 14px 24px; font-weight: 600; }",
+      ".App-main { padding: 24px; max-width: 720px; margin: 0 auto; }",
+      ".App-card { background: #ffffff; border: 1px solid #e5e5ea; border-radius: 12px; padding: 16px; margin-bottom: 16px; }",
+      ".App-text { color: #3a3a3c; }",
+      ".App-button { background: #f2f2f7; color: #0071e3; border: 1px solid #c7c7cc; padding: 8px 16px; border-radius: 8px; }",
+      "@media screen {}",
+    ].forEach((r, i) => sheet.insertRule(r, i));
+    // A rule inserted into a grouping rule after the fact (JSS does this for media queries).
+    const media = sheet.cssRules[sheet.cssRules.length - 1];
+    media.insertRule(".App-card h2 { color: #111111; }", 0);
+    const adopted = new CSSStyleSheet();
+    adopted.replaceSync(".App-note { background: #fbfbfd; color: #48484a; padding: 8px; border-left: 3px solid #d2d2d7; }");
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, adopted];
+    document.documentElement.setAttribute("data-fixture-styled", "");
+  });
+</script>
+</body>
+</html>

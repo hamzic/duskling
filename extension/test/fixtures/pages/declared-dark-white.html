@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<!-- Declares only a dark scheme but paints a white page: no dark theme to use, so Duskling themes it. -->
+<meta name="color-scheme" content="dark">
+<title>Declared dark, painted white</title>
+<style>
+  html, body { margin: 0; background: #ffffff; color: #1c1c1e; font: 16px/1.5 system-ui, sans-serif; }
+  main { padding: 24px; }
+  .card { background: #f2f2f7; padding: 16px; border-radius: 10px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card"><h1>Says dark, looks white</h1><p>The color-scheme meta asks for dark, the styles paint white.</p></div>
+  <div class="card"><p>Another card with enough text to measure contrast.</p></div>
+</main>
+</body>
+</html>

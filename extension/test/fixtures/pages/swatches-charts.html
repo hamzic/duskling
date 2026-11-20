@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Swatches and charts</title>
+<!-- Inline colors that are content (content-color guard): textless color swatch buttons, status dots and an inline
+     SVG bar chart with five fills stay as they are. Avatars with initials have text, so the guard doesn't apply and they
+     are transformed. Chart axis text and lines are ordinary colors and still get themed. -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #222222; font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  .swatches { display: flex; gap: 8px; }
+  .swatch { width: 32px; height: 32px; border: 1px solid #cccccc; border-radius: 6px; padding: 0; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+  .avatar { display: inline-flex; width: 40px; height: 40px; border-radius: 50%; align-items: center; justify-content: center; color: #ffffff; font-weight: 600; margin-right: 8px; }
+  .status { margin: 4px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Colors as content</h1>
+  <h2>Pick a color</h2>
+  <div class="swatches" id="swatches">
+    <button class="swatch" aria-label="Red" style="background-color: #e53935"></button>
+    <button class="swatch" aria-label="Orange" style="background-color: #fb8c00"></button>
+    <button class="swatch" aria-label="Green" style="background-color: #43a047"></button>
+    <button class="swatch" aria-label="Blue" style="background-color: #1e88e5"></button>
+    <button class="swatch" aria-label="Purple" style="background-color: #8e24aa"></button>
+  </div>
+  <h2>Status</h2>
+  <p class="status"><span class="dot" id="dot-ok" style="background: #2e7d32"></span>Operational</p>
+  <p class="status"><span class="dot" id="dot-warn" style="background: #f9a825"></span>Degraded</p>
+  <p class="status"><span class="dot" id="dot-down" style="background: #c62828"></span>Outage</p>
+  <h2>Team</h2>
+  <p><span class="avatar" style="background: #5e35b1">AB</span><span class="avatar" style="background: #00897b">CD</span><span class="avatar" style="background: #d81b60">EF</span></p>
+  <h2>Revenue</h2>
+  <svg id="chart" width="360" height="200" viewBox="0 0 360 200" role="img" aria-label="Bar chart">
+    <line x1="40" y1="170" x2="340" y2="170" stroke="#333333"/>
+    <line x1="40" y1="10" x2="40" y2="170" stroke="#333333"/>
+    <rect class="bar" x="60" y="90" width="40" height="80" fill="#4285f4"/>
+    <rect class="bar" x="115" y="50" width="40" height="120" fill="#ea4335"/>
+    <rect class="bar" x="170" y="110" width="40" height="60" fill="#fbbc05"/>
+    <rect class="bar" x="225" y="70" width="40" height="100" fill="#34a853"/>
+    <rect class="bar" x="280" y="30" width="40" height="140" fill="#9c27b0"/>
+    <text class="axis" x="80" y="188" text-anchor="middle" fill="#333333" font-size="12">Q1</text>
+    <text class="axis" x="135" y="188" text-anchor="middle" fill="#333333" font-size="12">Q2</text>
+    <text class="axis" x="190" y="188" text-anchor="middle" fill="#333333" font-size="12">Q3</text>
+    <text class="axis" x="245" y="188" text-anchor="middle" fill="#333333" font-size="12">Q4</text>
+    <text class="axis" x="300" y="188" text-anchor="middle" fill="#333333" font-size="12">Q5</text>
+    <text class="axis" x="34" y="20" text-anchor="end" fill="#333333" font-size="12">100</text>
+  </svg>
+</main>
+</body>
+</html>

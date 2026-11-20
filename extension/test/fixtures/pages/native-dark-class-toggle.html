@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Class-toggle dark theme (Tailwind)</title>
+<!-- A Tailwind-style site whose dark theme sits behind html.dark, which its own script never sets. Both
+     forms are present: v3 `.dark .x` descendant rules and the v4 `:where(.dark, .dark *)` custom variant. The variant with
+     [data-bs-theme=dark] (Bootstrap 5.3) is native-dark-class-toggle-bs.html. Like a real Tailwind build it has more than
+     the 20 background rules behind the marker that signal 4 needs. -->
+<style>
+  html, body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+  .bg-white { background-color: #ffffff; }
+  .bg-gray-50 { background-color: #f9fafb; }
+  .bg-gray-100 { background-color: #f3f4f6; }
+  .text-gray-900 { color: #111827; }
+  .text-gray-600 { color: #4b5563; }
+  .text-blue-600 { color: #2563eb; }
+  .border { border: 1px solid #e5e7eb; }
+  .p-4 { padding: 16px; } .p-6 { padding: 24px; } .mb-4 { margin-bottom: 16px; } .rounded-lg { border-radius: 8px; }
+  .bg-slate-50 { background-color: #f8fafc; }
+  .bg-zinc-50 { background-color: #fafafa; }
+  .bg-neutral-50 { background-color: #fafafa; }
+  .bg-stone-50 { background-color: #fafaf9; }
+  .bg-sky-50 { background-color: #f0f9ff; }
+  .mx-auto { margin-left: auto; margin-right: auto; } .max-w-2xl { max-width: 672px; }
+  /* Tailwind v3 (darkMode: "class") */
+  .dark .dark\:bg-gray-900 { background-color: #111827; }
+  .dark .dark\:bg-gray-800 { background-color: #1f2937; }
+  .dark .dark\:text-gray-100 { color: #f3f4f6; }
+  .dark .dark\:text-gray-400 { color: #9ca3af; }
+  .dark .dark\:border-gray-700 { border-color: #374151; }
+  .dark .dark\:bg-slate-900 { background-color: #0f172a; }
+  .dark .dark\:hover\:bg-slate-800:hover { background-color: #1e293b; }
+  .dark .dark\:bg-zinc-900 { background-color: #18181b; }
+  .dark .dark\:hover\:bg-zinc-800:hover { background-color: #27272a; }
+  .dark .dark\:bg-neutral-900 { background-color: #171717; }
+  .dark .dark\:hover\:bg-neutral-800:hover { background-color: #262626; }
+  .dark .dark\:bg-stone-900 { background-color: #1c1917; }
+  .dark .dark\:hover\:bg-stone-800:hover { background-color: #292524; }
+  .dark .dark\:bg-sky-900 { background-color: #0c4a6e; }
+  .dark .dark\:hover\:bg-sky-800:hover { background-color: #075985; }
+  /* Tailwind v4 (@custom-variant dark (&:where(.dark, .dark *))) */
+  .dark\:bg-gray-950:where(.dark, .dark *) { background-color: #030712; }
+  .dark\:text-blue-400:where(.dark, .dark *) { color: #60a5fa; }
+  .dark\:bg-gray-800v4:where(.dark, .dark *) { background-color: #1f2937; }
+  .dark\:bg-slate-950:where(.dark, .dark *) { background-color: #0f172a; }
+  .dark\:hover\:bg-slate-700:where(.dark, .dark *):hover { background-color: #1e293b; }
+  .dark\:bg-zinc-950:where(.dark, .dark *) { background-color: #18181b; }
+  .dark\:hover\:bg-zinc-700:where(.dark, .dark *):hover { background-color: #27272a; }
+  .dark\:bg-neutral-950:where(.dark, .dark *) { background-color: #171717; }
+  .dark\:hover\:bg-neutral-700:where(.dark, .dark *):hover { background-color: #262626; }
+  .dark\:bg-stone-950:where(.dark, .dark *) { background-color: #1c1917; }
+  .dark\:hover\:bg-stone-700:where(.dark, .dark *):hover { background-color: #292524; }
+  .dark\:bg-sky-950:where(.dark, .dark *) { background-color: #0c4a6e; }
+  .dark\:hover\:bg-sky-700:where(.dark, .dark *):hover { background-color: #075985; }
+  html.dark { color-scheme: dark; }
+</style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-gray-950">
+<header class="bg-gray-50 border p-4 dark:bg-gray-900 dark:border-gray-700">Tailwind site</header>
+<main class="mx-auto max-w-2xl p-6">
+  <div class="bg-white border rounded-lg p-4 mb-4 dark:bg-gray-800 dark:border-gray-700">
+    <h2 class="text-gray-900 dark:text-gray-100">Card</h2>
+    <p class="text-gray-600 dark:text-gray-400">Utility classes with dark: variants. <a class="text-blue-600 dark:text-blue-400" href="#">Link</a></p>
+  </div>
+  <ul style="list-style: none; padding: 0">
+    <li class="bg-slate-50 p-4 mb-4 rounded-lg dark:bg-slate-900 dark:hover:bg-slate-800 dark:bg-slate-950 dark:hover:bg-slate-700"><span class="text-gray-600 dark:text-gray-400">Slate surface</span></li>
+    <li class="bg-zinc-50 p-4 mb-4 rounded-lg dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-700"><span class="text-gray-600 dark:text-gray-400">Zinc surface</span></li>
+    <li class="bg-neutral-50 p-4 mb-4 rounded-lg dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-700"><span class="text-gray-600 dark:text-gray-400">Neutral surface</span></li>
+    <li class="bg-stone-50 p-4 mb-4 rounded-lg dark:bg-stone-900 dark:hover:bg-stone-800 dark:bg-stone-950 dark:hover:bg-stone-700"><span class="text-gray-600 dark:text-gray-400">Stone surface</span></li>
+    <li class="bg-sky-50 p-4 mb-4 rounded-lg dark:bg-sky-900 dark:hover:bg-sky-800 dark:bg-sky-950 dark:hover:bg-sky-700"><span class="text-gray-600 dark:text-gray-400">Sky surface</span></li>
+  </ul>
+  <div class="bg-gray-100 rounded-lg p-4 dark:bg-gray-800v4"><p class="text-gray-600 dark:text-gray-400">A v4-variant surface.</p></div>
+</main>
+<script>
+  // The site's own toggle: it would only add the class on user choice, which never happens here.
+  window.setTheme = (dark) => document.documentElement.classList.toggle("dark", dark);
+</script>
+</body>
+</html>

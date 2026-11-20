@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- A strict style-src: Safari refuses every <style> element the extension inserts and re-parses of a
+     changed style attribute, but applies constructed sheets in adoptedStyleSheets and CSSOM writes. -->
+<meta http-equiv="Content-Security-Policy" content="style-src 'self'">
+<title>Strict CSP style-src</title>
+<link rel="stylesheet" href="assets/csp-strict.css">
+</head>
+<body>
+<header>Strict CSP site</header>
+<main>
+  <div class="card"><h1>Only same-origin stylesheets</h1><p>Inline style elements are refused. <a href="#">A link</a>.</p></div>
+  <div class="card" id="cssom-card"><p>A framework set this card's colors through the CSSOM.</p></div>
+  <div class="card"><p>Another card with enough text to measure contrast.</p></div>
+</main>
+<script>
+  // Inline styles set through the CSSOM apply under style-src; a markup style attribute would not.
+  const card = document.getElementById("cssom-card");
+  card.style.backgroundColor = "#ffffff";
+  card.style.color = "#333333";
+  window.cssomCardCss = card.style.cssText;
+</script>
+</body>
+</html>

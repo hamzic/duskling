@@ -1,0 +1,238 @@
+/* Popup styles (DESIGN.md tokens; spacing 4/8/12/16/24 only; radius 14 section, 10 row).
+   `font: -apple-system-body` follows Dynamic Type in WebKit. accent-color tints the native switch and is
+   supported on safari_ios 15.4+ (@mdn/browser-compat-data 8.1.6, css.properties.accent-color). Ember text only sits on
+   grouped cells: #A35F00 on #FFFFFF is 5.0:1, on the #F2F2F7 background only 4.49:1. */
+:root {
+  color-scheme: light dark;
+  --bg: #F2F2F7;
+  --cell: #FFFFFF;
+  --text: #000000;
+  --secondary: #3C3C4399;
+  --accent: #A35F00;
+  --on-accent: #FFFFFF;
+  --separator: #3C3C434A;
+  --track: #7676801F;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --cell: #1C1C1E;
+    --text: #FFFFFF;
+    --secondary: #EBEBF599;
+    --accent: #F0A848;
+    --on-accent: #000000;
+    --separator: #54545899;
+    --track: #7676803D;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --secondary: #3C3C43C2;
+    --separator: #3C3C43;
+  }
+}
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root {
+    --secondary: #EBEBF5C2;
+    --separator: #EBEBF5;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  font: -apple-system-body;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--bg);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+[hidden] { display: none !important; }
+
+p, h1 { margin: 0; }
+
+#state-normal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.host {
+  font: -apple-system-headline;
+  font-family: inherit;
+  padding: 0 16px;
+  overflow-wrap: anywhere;
+}
+
+.group {
+  background: var(--cell);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 16px;
+  margin: 0;
+  width: 100%;
+  border-radius: 10px;
+  position: relative;
+}
+
+.row + .row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 0;
+  border-top: 0.5px solid var(--separator);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.action {
+  color: var(--accent);
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.link {
+  color: var(--accent);
+  min-height: 44px;
+  flex: none;
+  text-align: left;
+}
+
+input[switch] {
+  accent-color: var(--accent);
+  flex: none;
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+.caption {
+  justify-content: flex-start;
+  gap: 4px;
+  color: var(--text);
+  font: -apple-system-footnote;
+  font-family: inherit;
+  flex-wrap: wrap;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* The caption belongs to the segmented control above it: no separator. */
+.row.caption::before { display: none; }
+
+.caption .link::before {
+  content: "·";
+  color: var(--text);
+  margin-right: 4px;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding: 4px 16px;
+  min-height: 44px;
+}
+
+.banner p { padding: 8px 0; }
+
+/* Segmented control: native radios (keyboard and VoiceOver semantics come from them), drawn as segments. */
+.segmented {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 10px;
+  background: var(--track);
+}
+
+.segmented label {
+  flex: 1;
+  position: relative;
+  display: flex;
+}
+
+.segmented input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segmented span {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.segmented input:checked + span {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.segmented input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.state-message {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 16px;
+}
+
+.state-message h1 {
+  font: -apple-system-headline;
+  font-family: inherit;
+}

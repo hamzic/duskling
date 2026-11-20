@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shadow DOM</title>
+<!-- Light fixture: web components with open shadow roots, styled by <style> in the root, by adoptedStyleSheets, and a
+     nested shadow root inside another one. -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #202020; font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Components</h1>
+  <x-card heading="Style element in the root">Text inside a shadow root styled by its own style element.</x-card>
+  <x-adopted heading="Adopted stylesheet">Text styled by a constructed sheet in shadowRoot.adoptedStyleSheets.</x-adopted>
+  <x-outer></x-outer>
+</main>
+<script>
+  customElements.define("x-card", class extends HTMLElement {
+    connectedCallback() {
+      if (this.shadowRoot) return;
+      const r = this.attachShadow({ mode: "open" });
+      r.innerHTML = `<style>
+        .card { background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; margin: 12px 0; }
+        h2 { color: #111111; margin: 0 0 8px; } p { color: #424242; margin: 0; }
+      </style><div class="card"><h2>${this.getAttribute("heading")}</h2><p><slot></slot></p></div>`;
+    }
+  });
+  const shared = new CSSStyleSheet();
+  shared.replaceSync(`.box { background: #f7f7f9; border: 1px solid #dcdce0; padding: 16px; margin: 12px 0; }
+    h2 { color: #1a1a1a; margin: 0 0 8px; } p { color: #4a4a4a; margin: 0; }`);
+  customElements.define("x-adopted", class extends HTMLElement {
+    connectedCallback() {
+      if (this.shadowRoot) return;
+      const r = this.attachShadow({ mode: "open" });
+      r.adoptedStyleSheets = [shared];
+      r.innerHTML = `<div class="box"><h2>${this.getAttribute("heading")}</h2><p><slot></slot></p></div>`;
+    }
+  });
+  customElements.define("x-inner", class extends HTMLElement {
+    connectedCallback() {
+      if (this.shadowRoot) return;
+      const r = this.attachShadow({ mode: "open" });
+      r.innerHTML = `<style>.inner { background: #fefefe; color: #333333; border: 1px dashed #cccccc; padding: 12px; }</style>
+        <div class="inner">Nested shadow root (inside x-outer's root).</div>`;
+    }
+  });
+  customElements.define("x-outer", class extends HTMLElement {
+    connectedCallback() {
+      if (this.shadowRoot) return;
+      const r = this.attachShadow({ mode: "open" });
+      r.innerHTML = `<style>.outer { background: #f0f0f0; color: #222222; padding: 12px; margin: 12px 0; }</style>
+        <div class="outer"><h2 style="margin:0 0 8px;color:#111">Outer component</h2><x-inner></x-inner></div>`;
+    }
+  });
+</script>
+</body>
+</html>

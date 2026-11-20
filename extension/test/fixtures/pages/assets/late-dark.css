@@ -1,0 +1,5 @@
+/* Linked by native-dark-media-late.html after load, like a route's CSS chunk in an SPA. */
+.late-panel { background: #fffbe6; border: 1px solid #e0d8b0; padding: 16px; border-radius: 10px; }
+@media (prefers-color-scheme: dark) {
+  .late-panel { background: #1e1c14; border-color: #4a4530; }
+}

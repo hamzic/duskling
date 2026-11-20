@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blend modes</title>
+<!-- Shop-style product tiles: a product photo on a white backdrop with mix-blend-mode: multiply over a light tile (turns
+     black once the tile is dark), background-blend-mode, and modes the blend remap must keep (difference). -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #222222; font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tile { background: #f5f5f5; padding: 16px; border-radius: 8px; text-align: center; }
+  .tile img { width: 160px; height: 160px; mix-blend-mode: multiply; }
+  .bgblend { height: 160px; background-color: #f0f0f0; background-image: url("assets/product.png"); background-size: contain; background-repeat: no-repeat; background-position: center; background-blend-mode: multiply; }
+  .screen img { mix-blend-mode: screen; }
+  .diff { mix-blend-mode: difference; color: #ffffff; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+  <div class="tile"><img id="product" src="assets/product.png" alt="Product"><p>Multiply on a light tile</p></div>
+  <div class="tile"><div class="bgblend" id="bgblend"></div><p>background-blend-mode</p></div>
+  <div class="tile screen"><img src="assets/product.png" alt="Screen"><p>Screen blend</p></div>
+  <div class="tile"><img style="mix-blend-mode: darken" src="assets/product.png" alt="Darken inline"><p>Inline darken</p></div>
+  <div class="tile"><p class="diff">Difference stays</p></div>
+</main>
+</body>
+</html>

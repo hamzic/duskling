@@ -1,0 +1,8 @@
+// Copy to Signing.local.xcconfig (git-ignored) to build for a device or archive.
+// Base.xcconfig includes it with #include? so the project also builds without it (Simulator, CI).
+DEVELOPMENT_TEAM = ABCDE12345
+CODE_SIGN_STYLE = Automatic
+// Free personal team (no paid Apple Developer Program): App Groups work on a device, iCloud key-value storage doesn't.
+// Uncomment to sign Debug builds without it (settings then don't sync between devices), and pick a bundle id that's
+// unique to your team in APP_BUNDLE_ID / APP_GROUP_ID.
+// DUSK_APP_ENTITLEMENTS = App/Dusk.personal.entitlements

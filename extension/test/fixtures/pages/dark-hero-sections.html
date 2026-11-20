@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dark hero sections</title>
+<!-- Light fixture with intentionally dark sections: a dark hero, a dark call-to-action band and a dark footer. They must
+     stay dark and their light text must stay light. -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #1d1d1f; font: 16px/1.5 system-ui, sans-serif; }
+  .hero { background: #0b0d12; color: #f5f5f7; padding: 64px 24px; text-align: center; }
+  .hero p { color: #c7c7cc; }
+  .hero a { color: #ffffff; border: 1px solid #ffffff; padding: 8px 16px; border-radius: 20px; text-decoration: none; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 24px; }
+  .feature { background: #f5f5f7; padding: 16px; margin-bottom: 16px; border-radius: 12px; }
+  .cta { background: linear-gradient(135deg, #1c1c28, #2b2b3c); color: #ffffff; padding: 40px 24px; text-align: center; }
+  .cta .sub { color: #d0d0dc; }
+  footer { background: #111111; color: #a1a1a6; padding: 32px 24px; }
+  footer a { color: #f5f5f7; }
+</style>
+</head>
+<body>
+<section class="hero"><h1>Dark hero, light page</h1><p>White text on near-black must remain readable.</p><a href="#">Get started</a></section>
+<main>
+  <div class="feature"><h2>Feature one</h2><p>Light card on the light part of the page.</p></div>
+  <div class="feature"><h2>Feature two</h2><p>Another light card.</p></div>
+</main>
+<section class="cta"><h2>Join today</h2><p class="sub">Light text on a dark gradient band.</p></section>
+<footer>Footer text in grey on black. <a href="#">Footer link</a></footer>
+</body>
+</html>

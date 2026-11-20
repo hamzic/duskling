@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Native dark (media query), CSS added after load</title>
+<!-- A site with a complete dark theme behind prefers-color-scheme: dark that loads more CSS after the
+     dark verdict: a route's stylesheet linked after load, and CSS-in-JS inserting rules through the CSSOM. Each has its own
+     dark block, which the promotion must take too. -->
+<style>
+  :root { --bg: #ffffff; --fg: #1c1c1e; --card: #f2f2f7; --line: #d1d1d6; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #121214; --fg: #ececf1; --card: #1f1f24; --line: #3a3a3f; }
+  }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); padding: 16px; border-radius: 10px; margin-bottom: 16px; }
+</style>
+<style id="css-in-js"></style>
+</head>
+<body>
+<main>
+  <div class="card"><h1>Designed for both schemes</h1><p>More CSS arrives after the page has loaded.</p></div>
+  <div class="late-panel"><p>Styled by a stylesheet linked after load.</p></div>
+  <div class="js-panel"><p>Styled by rules a script inserts through the CSSOM.</p></div>
+</main>
+<script>
+  addEventListener("load", () => {
+    setTimeout(() => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "assets/late-dark.css";
+      document.head.append(link);
+      const sheet = document.getElementById("css-in-js").sheet;
+      sheet.insertRule(".js-panel { background: #eef6ff; padding: 16px; margin-top: 16px; border-radius: 10px; }", 0);
+      sheet.insertRule("@media (prefers-color-scheme: dark) { .js-panel { background: #141c26; } }", 1);
+    }, 300);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cross-origin boxes</title>
+<!-- Light article boxes styled only by a sheet from origin B (no CORS): until the engine's background fetch returns, the
+     pre-paint covers html and body but not these boxes. -->
+<link rel="stylesheet" href="http://localhost:4101/assets/cross-origin-boxes.css">
+</head>
+<body style="margin: 0; font: 16px/1.5 system-ui, sans-serif">
+<header class="bar">Site</header>
+<main class="article"><h1>Headline</h1><p>Article text in a light box that fills the screen.</p></main>
+</body>
+</html>

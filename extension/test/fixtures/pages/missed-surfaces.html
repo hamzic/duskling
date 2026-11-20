@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Missed surfaces</title>
+<!-- Light fixture for the contrast-repair pass: white surfaces the CSSOM rewrite can't see. A panel whose white
+     background and dark text are set by script after load, a <dialog> that only has user-agent styles, and a white card
+     inside a closed shadow root. One image box is the allowed exception for "no bright surfaces". -->
+<style>
+  html, body { margin: 0; background: #ffffff; color: #1f1f1f; font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  dialog { position: static; margin: 16px 0; }
+  .imgbox { width: 320px; height: 200px; background: url("assets/photo.png") center / cover; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Surfaces the rewrite misses</h1>
+  <div id="late-panel">This panel turns white after load (script-set inline style).</div>
+  <dialog id="dlg" open><p>A dialog with user-agent colors only.</p><button type="button">OK</button></dialog>
+  <div id="closed-host"></div>
+  <div class="imgbox" id="imgbox" role="img" aria-label="photo"></div>
+</main>
+<script>
+  // A closed shadow root: the engine can't reach its style element, the repair pass sees only the rendered result.
+  const root = document.getElementById("closed-host").attachShadow({ mode: "closed" });
+  root.innerHTML = `<style>.card { background: #ffffff; color: #222222; border: 1px solid #e0e0e0; padding: 16px; margin: 16px 0; }</style>
+    <div class="card"><strong>Closed shadow root</strong><p>White card the CSSOM rewrite can't see.</p></div>`;
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const p = document.getElementById("late-panel");
+      Object.assign(p.style, { background: "white", color: "#202020", padding: "16px", border: "1px solid #ddd" });
+      document.documentElement.setAttribute("data-fixture-late", "");
+    }, 50);
+  });
+</script>
+</body>
+</html>

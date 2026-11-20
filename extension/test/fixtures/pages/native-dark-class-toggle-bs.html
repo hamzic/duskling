@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Attribute-toggle dark theme (Bootstrap)</title>
+<!-- Variant of native-dark-class-toggle: a Bootstrap 5.3-style theme behind [data-bs-theme=dark] on html, never set. -->
+<style>
+  :root, [data-bs-theme=light] { --bs-body-bg: #ffffff; --bs-body-color: #212529; --bs-secondary-bg: #e9ecef; --bs-tertiary-bg: #f8f9fa; --bs-border-color: #dee2e6; --bs-link-color: #0d6efd; }
+  /* Like Bootstrap 5.3's compiled CSS: one [data-bs-theme=dark] rule holding the dark theme's custom properties (signal 4
+     counts these declarations, not rules). */
+  [data-bs-theme=dark] {
+    color-scheme: dark;
+    --bs-body-color: #dee2e6; --bs-body-color-rgb: 222, 226, 230; --bs-body-bg: #212529; --bs-body-bg-rgb: 33, 37, 41;
+    --bs-emphasis-color: #ffffff; --bs-emphasis-color-rgb: 255, 255, 255;
+    --bs-secondary-color: rgba(222, 226, 230, 0.75); --bs-secondary-color-rgb: 222, 226, 230;
+    --bs-secondary-bg: #343a40; --bs-secondary-bg-rgb: 52, 58, 64;
+    --bs-tertiary-color: rgba(222, 226, 230, 0.5); --bs-tertiary-color-rgb: 222, 226, 230;
+    --bs-tertiary-bg: #2b3035; --bs-tertiary-bg-rgb: 43, 48, 53;
+    --bs-primary-text-emphasis: #6ea8fe; --bs-secondary-text-emphasis: #a7acb1; --bs-success-text-emphasis: #75b798;
+    --bs-danger-text-emphasis: #ea868f; --bs-primary-bg-subtle: #031633; --bs-secondary-bg-subtle: #161719;
+    --bs-primary-border-subtle: #084298; --bs-secondary-border-subtle: #41464b;
+    --bs-heading-color: inherit; --bs-link-color: #6ea8fe; --bs-link-hover-color: #8bb9fe;
+    --bs-link-color-rgb: 110, 168, 254; --bs-link-hover-color-rgb: 139, 185, 254; --bs-code-color: #e685b5;
+    --bs-border-color: #495057; --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
+  }
+  body { margin: 0; background-color: var(--bs-body-bg); color: var(--bs-body-color); font: 16px/1.5 system-ui, sans-serif; }
+  .navbar { background-color: var(--bs-tertiary-bg); border-bottom: 1px solid var(--bs-border-color); padding: 12px 24px; }
+  .container { max-width: 720px; margin: 0 auto; padding: 24px; }
+  .card { background-color: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: 6px; padding: 16px; margin-bottom: 16px; }
+  .card-header { background-color: var(--bs-secondary-bg); margin: -16px -16px 12px; padding: 8px 16px; }
+  a { color: var(--bs-link-color); }
+</style>
+</head>
+<body>
+<nav class="navbar">Bootstrap site</nav>
+<div class="container">
+  <div class="card"><div class="card-header">Header</div><p>Theme variables switch on data-bs-theme. <a href="#">Link</a></p></div>
+  <div class="card"><p>Second card.</p></div>
+</div>
+</body>
+</html>

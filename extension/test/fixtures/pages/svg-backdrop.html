@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>SVG illustration backdrops</title>
+<!-- Illustrations drawn as inline SVG whose first shape is a full-size light backdrop: it should turn into the dark
+     page background, while an icon's shapes and the illustration's own ink keep the foreground transform. -->
+<style>
+  html, body { margin: 0; background: #fff; color: #1c1c1e; font: 16px/1.5 system-ui, sans-serif; }
+  html, body { overflow-x: hidden; }
+  main { padding: 16px; }
+  svg { display: block; margin: 16px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Illustrations</h1>
+  <svg id="hero" width="360" height="180" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg">
+    <rect id="hero-bg" width="720" height="360" fill="#ffffff"/>
+    <circle cx="360" cy="180" r="120" fill="none" stroke="#e3e5e8" stroke-width="4"/>
+    <path id="hero-ink" d="M100 300 L620 300" stroke="#222222" stroke-width="6"/>
+  </svg>
+  <svg id="panel" width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+    <rect id="panel-bg" x="0" y="0" width="300" height="150" style="fill:#ebebeb"/>
+    <rect x="40" y="40" width="80" height="60" fill="#d83a3a"/>
+  </svg>
+  <!-- Wider than the screen and shifted left: the backdrop covers 70 % of the whole box but 80 % of what can be seen. -->
+  <svg id="wide" width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="margin-left:-100px">
+    <rect id="wide-bg" x="180" width="420" height="200" fill="#ffffff"/>
+  </svg>
+  <!-- Shown by script after load through an attribute change: no layout at the first check. -->
+  <svg id="shown" width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+    <g id="shown-g" style="display:none"><rect id="shown-bg" width="300" height="150" fill="#ffffff"/></g>
+  </svg>
+  <!-- Drawn by script after load, like an animation library: the backdrop arrives inside an existing <svg>. -->
+  <svg id="late" width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg"></svg>
+  <p>An icon <svg id="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;margin:0"><rect id="icon-bg" width="24" height="24" fill="#ffffff"/><path d="M4 12h16" stroke="#222"/></svg> stays an icon.</p>
+</main>
+<script>
+  addEventListener("load", () => setTimeout(() => {
+    const ns = "http://www.w3.org/2000/svg";
+    const g = document.createElementNS(ns, "g");
+    const bg = document.createElementNS(ns, "rect");
+    bg.id = "late-bg";
+    for (const [k, v] of [["width", "300"], ["height", "150"], ["fill", "#ffffff"]]) bg.setAttribute(k, v);
+    g.append(bg);
+    document.getElementById("late").append(g);
+    document.getElementById("shown-g").style.display = "inline";
+  }, 100));
+</script>
+</body>
+</html>

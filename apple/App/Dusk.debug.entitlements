@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Debug builds only (see project.yml). Same as Dusk.entitlements plus get-task-allow. Apple TN2415, "List of
+	     Entitlements": get-task-allow determines whether Xcode's debugger can attach to the app.
+	     https://developer.apple.com/library/archive/technotes/tn2415/_index.html -->
+	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+	<string>$(TeamIdentifierPrefix)$(APP_BUNDLE_ID)</string>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>$(APP_GROUP_ID)</string>
+	</array>
+	<key>get-task-allow</key>
+	<true/>
+</dict>
+</plist>

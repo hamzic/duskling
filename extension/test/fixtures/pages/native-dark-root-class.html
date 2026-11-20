@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" class="xroot">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Native dark on an atomic root class</title>
+<!-- CSS-in-JS output (atomic classes, light-dark() compiled by Lightning CSS into two switch variables): the theme sits on a
+     class of html, not on html or :root, and the dark switch is behind prefers-color-scheme. -->
+<style>
+  .xroot { --lightningcss-light: initial; --lightningcss-dark: ; color-scheme: light dark; }
+  @media (prefers-color-scheme: dark) { .xroot { --lightningcss-light: ; --lightningcss-dark: initial; } }
+  .xroot {
+    --bg: var(--lightningcss-light, #ffffff) var(--lightningcss-dark, #121214);
+    --fg: var(--lightningcss-light, #0d0d0d) var(--lightningcss-dark, #f2f2f2);
+    --card: var(--lightningcss-light, #f4f4f4) var(--lightningcss-dark, #202024);
+  }
+  html, body { margin: 0; }
+  .xbody { background-color: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; }
+  .xcard { background-color: var(--card); padding: 16px; margin: 16px; border-radius: 10px; }
+</style>
+</head>
+<body class="xbody">
+<div class="xcard"><h1>Designed for both schemes</h1><p>The colors come from light-dark() compiled to two variables.</p></div>
+<div class="xcard"><p>Another card with enough text to measure contrast in either scheme.</p></div>
+</body>
+</html>

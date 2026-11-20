@@ -1,0 +1,39 @@
+{
+  "name": "duskling-extension",
+  "private": true,
+  "license": "MIT",
+  "packageManager": "pnpm@10.34.5",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:test": "node scripts/build.mjs --test",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:e2e": "node scripts/build.mjs --test && playwright test --project=e2e",
+    "test:unit-webkit": "playwright test --project=unit-webkit",
+    "test:live": "node scripts/build.mjs --test && DUSK_LIVE=1 playwright test --project=live --reporter=list",
+    "size": "node scripts/size.mjs",
+    "research:fixes": "node scripts/analyze-darkreader-fixes.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.19.2",
+    "esbuild": "0.28.2",
+    "eslint": "10.15.0",
+    "happy-dom": "21.0.4",
+    "pngjs": "7.0.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.73.0",
+    "vitest": "5.1.1"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

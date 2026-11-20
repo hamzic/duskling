@@ -1,0 +1,30 @@
+name: A site looks wrong
+description: Text you can't read, a light area left over, or something broken on one site.
+labels: ["broken site"]
+body:
+  - type: input
+    id: host
+    attributes:
+      label: Site
+      description: The host name only, for example example.com. Don't paste full addresses that contain personal information.
+    validations:
+      required: true
+  - type: dropdown
+    id: theme
+    attributes:
+      label: Theme
+      options: ["Dark", "Midnight", "Dim"]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What looks wrong
+      description: A screenshot helps a lot.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Duskling and iOS versions
+      placeholder: Duskling 1.0, iOS 27.2, iPhone

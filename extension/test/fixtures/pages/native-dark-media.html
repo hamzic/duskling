@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Native dark (media query)</title>
+<!-- A site with a complete dark theme behind prefers-color-scheme: dark. Duskling should promote it instead
+     of rewriting the light theme. -->
+<style>
+  :root { --bg: #ffffff; --fg: #1c1c1e; --card: #f2f2f7; --line: #d1d1d6; --link: #0a84ff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #121214; --fg: #ececf1; --card: #1f1f24; --line: #3a3a3f; --link: #64a8ff; }
+  }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; }
+  header { border-bottom: 1px solid var(--line); padding: 12px 24px; background: var(--card); }
+  main { max-width: 720px; margin: 0 auto; padding: 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); padding: 16px; border-radius: 10px; margin-bottom: 16px; }
+  a { color: var(--link); }
+  footer { padding: 24px; border-top: 1px solid var(--line); }
+  .hero { background: #fafafa; padding: 32px 24px; }
+  /* The dark block comes after the base rules it overrides, so with the dark scheme the whole page is dark. */
+  @media (prefers-color-scheme: dark) {
+    .hero { background: #18181c; }
+  }
+</style>
+</head>
+<body>
+<header>Native dark site</header>
+<section class="hero"><h1>Designed for both schemes</h1></section>
+<main>
+  <div class="card"><h2>Card</h2><p>Colors switch with the system scheme. <a href="#">A link</a>.</p></div>
+  <div class="card"><p>Another card with enough text to measure contrast in either scheme.</p></div>
+</main>
+<footer>Footer</footer>
+</body>
+</html>

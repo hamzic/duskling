@@ -1,0 +1,504 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "About" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        }
+      }
+    },
+    "Dark" : {
+      "comment" : "Theme name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark"
+          }
+        }
+      }
+    },
+    "Dark mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark mode"
+          }
+        }
+      }
+    },
+    "Dark mode for every website." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark mode for every website."
+          }
+        }
+      }
+    },
+    "Dark theme" : {
+      "comment" : "VoiceOver label of the Dark theme swatch",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark theme"
+          }
+        }
+      }
+    },
+    "Default style" : {
+      "comment" : "Sites list: site uses the full style",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default style"
+          }
+        }
+      }
+    },
+    "Dim" : {
+      "comment" : "Theme name (warm)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dim"
+          }
+        }
+      }
+    },
+    "Dim images" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dim images"
+          }
+        }
+      }
+    },
+    "Dim theme" : {
+      "comment" : "VoiceOver label of the Dim theme swatch",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dim theme"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "comment" : "Onboarding: closes setup",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Free and open source. No tracking, no accounts." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free and open source. No tracking, no accounts."
+          }
+        }
+      }
+    },
+    "Gentle style" : {
+      "comment" : "Sites list: site uses the gentle style",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gentle style"
+          }
+        }
+      }
+    },
+    "I've done this" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I've done this"
+          }
+        }
+      }
+    },
+    "Images dimmed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Images dimmed"
+          }
+        }
+      }
+    },
+    "Images not dimmed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Images not dimmed"
+          }
+        }
+      }
+    },
+    "Makes photos and videos slightly darker." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makes photos and videos slightly darker."
+          }
+        }
+      }
+    },
+    "Midnight" : {
+      "comment" : "Theme name (pure black)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midnight"
+          }
+        }
+      }
+    },
+    "Midnight theme" : {
+      "comment" : "VoiceOver label of the Midnight theme swatch",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midnight theme"
+          }
+        }
+      }
+    },
+    "Not set up yet" : {
+      "comment" : "Home: extension status; opens setup",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not set up yet"
+          }
+        }
+      }
+    },
+    "Off" : {
+      "comment" : "Sites list: dark mode is off for this site",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        }
+      }
+    },
+    "Open **Settings › Apps › Safari › Extensions**." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open **Settings › Apps › Safari › Extensions**."
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        }
+      }
+    },
+    "Open any website in Safari." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open any website in Safari."
+          }
+        }
+      }
+    },
+    "Open-source licenses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open-source licenses"
+          }
+        }
+      }
+    },
+    "Paused" : {
+      "comment" : "Home: extension status",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paused"
+          }
+        }
+      }
+    },
+    "Privacy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        }
+      }
+    },
+    "Privacy policy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy policy"
+          }
+        }
+      }
+    },
+    "Report a problem" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report a problem"
+          }
+        }
+      }
+    },
+    "Safari extension" : {
+      "comment" : "Home: label of the extension status row",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safari extension"
+          }
+        }
+      }
+    },
+    "Set **All Websites** to **Allow**." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set **All Websites** to **Allow**."
+          }
+        }
+      }
+    },
+    "Set up" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set up"
+          }
+        }
+      }
+    },
+    "Simple style" : {
+      "comment" : "Sites list: site uses the simple (filter) style",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simple style"
+          }
+        }
+      }
+    },
+    "Site's own theme always used" : {
+      "comment" : "Sites list: the site's own dark theme is used even when it looks light",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Site's own theme always used"
+          }
+        }
+      }
+    },
+    "Site's own theme ignored" : {
+      "comment" : "Sites list: the site's own dark theme is ignored",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Site's own theme ignored"
+          }
+        }
+      }
+    },
+    "Sites" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sites"
+          }
+        }
+      }
+    },
+    "Sites you change in Safari appear here." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sites you change in Safari appear here."
+          }
+        }
+      }
+    },
+    "Source code on GitHub" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source code on GitHub"
+          }
+        }
+      }
+    },
+    "Theme" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Theme"
+          }
+        }
+      }
+    },
+    "Use sites' own dark themes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use sites' own dark themes"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "comment" : "About: app version row",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    },
+    "Waiting for Safari…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for Safari…"
+          }
+        }
+      }
+    },
+    "Working" : {
+      "comment" : "Home: extension status",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Working"
+          }
+        }
+      }
+    },
+    "about.privacy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duskling doesn't track what you browse. It has no analytics, no accounts and no servers."
+          }
+        }
+      }
+    },
+    "home.nativeDark.footer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When a site has its own dark theme, Duskling uses it."
+          }
+        }
+      }
+    },
+    "home.setUp.hint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows how to turn on Duskling in Safari."
+          }
+        }
+      }
+    },
+    "onboarding.enable.step2" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap **Duskling** and turn it on."
+          }
+        }
+      }
+    },
+    "onboarding.enable.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on Duskling in Safari."
+          }
+        }
+      }
+    },
+    "onboarding.verify.working" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duskling is working."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

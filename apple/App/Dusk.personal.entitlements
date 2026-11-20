@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Debug builds signed by a free personal team (Signing.local.xcconfig sets DUSK_APP_ENTITLEMENTS to this file).
+	     Dusk.debug.entitlements without iCloud key-value storage, which a personal team can't use; App Groups work
+	     (checked on a device). Settings don't sync between devices with this build. -->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>$(APP_GROUP_ID)</string>
+	</array>
+	<key>get-task-allow</key>
+	<true/>
+</dict>
+</plist>

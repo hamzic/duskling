@@ -1,0 +1,1552 @@
+[
+  {
+    "name": "no rules, defaults",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "null host falls back to global only",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": null,
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "www and case normalization of input host",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "WWW.Example.COM",
+    "expected": {
+      "enabled": true,
+      "mode": "gentle",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "trailing dot stripped from input host",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com.",
+    "expected": {
+      "enabled": true,
+      "mode": "gentle",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "subdomain inherits parent rule",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "filter",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "a.b.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "filter",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "nested: off parent, themed subdomain",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        },
+        "news.example.com": {
+          "theme": "midnight",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "news.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "off",
+      "modeIsExplicit": true,
+      "theme": "midnight",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "news.example.com"
+    }
+  },
+  {
+    "name": "nested: parent host only sees parent rule",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        },
+        "news.example.com": {
+          "theme": "midnight",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "off",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "more specific mode wins",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        },
+        "a.example.com": {
+          "mode": "filter",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "filter",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "a.example.com"
+    }
+  },
+  {
+    "name": "deeper host inherits nearest intermediate rule",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        },
+        "a.example.com": {
+          "mode": "filter",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "x.a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "filter",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "a.example.com"
+    }
+  },
+  {
+    "name": "tombstone does not match",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dim",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "updatedAt": 1760000000000,
+          "deleted": true
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dim",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "tombstoned child falls through to parent",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        },
+        "a.example.com": {
+          "updatedAt": 1760000000000,
+          "deleted": true
+        }
+      }
+    },
+    "host": "a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "gentle",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "nativeDark ignore turns respectNativeDark off",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "nativeDark": "ignore",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": false,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "nativeDark ignore inherited by subdomain",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "nativeDark": "ignore",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "m.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": false,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "respectNativeDark false globally",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": false,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": false,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "nativeDark ignore with global respect already false",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": false,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "nativeDark": "ignore",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": false,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "enabled false still reports site mode",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": false,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": false,
+      "mode": "gentle",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "site theme overrides global theme",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "midnight",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "theme": "dim",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dim",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "unmatched host uses global theme",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "midnight",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "theme": "dim",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "other.org",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "midnight",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "unrelated host is not matched",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "other.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "suffix without label boundary does not match",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "ample.com": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "dimImages global",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": true,
+          "updatedAt": 0
+        }
+      },
+      "sites": {}
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": true,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "fields split across levels resolve per field",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "theme": "dim",
+          "nativeDark": "ignore",
+          "updatedAt": 1760000000000
+        },
+        "a.example.com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "gentle",
+      "modeIsExplicit": true,
+      "theme": "dim",
+      "respectNativeDark": false,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "a.example.com"
+    }
+  },
+  {
+    "name": "IPv4 host matches exact rule",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "192.168.0.1": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "192.168.0.1",
+    "expected": {
+      "enabled": true,
+      "mode": "off",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "192.168.0.1"
+    }
+  },
+  {
+    "name": "IPv4 host does not match partial-octet suffix rule",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "168.0.1": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "192.168.0.1",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "host with port is invalid and falls back to global",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com:8080",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": null
+    }
+  },
+  {
+    "name": "www.www is stripped once only",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "www.x.com": {
+          "mode": "filter",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "www.www.x.com",
+    "expected": {
+      "enabled": true,
+      "mode": "filter",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "www.x.com"
+    }
+  },
+  {
+    "name": "rule with no fields still counts as matched host",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "TLD-level rule applies to every host under it",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "gentle",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "com"
+    }
+  },
+  {
+    "name": "tombstone between two live rules is skipped per field",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "theme": "dim",
+          "updatedAt": 1760000000000
+        },
+        "a.example.com": {
+          "updatedAt": 1760000000000,
+          "deleted": true
+        },
+        "b.a.example.com": {
+          "mode": "off",
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "b.a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "off",
+      "modeIsExplicit": true,
+      "theme": "dim",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "b.a.example.com"
+    }
+  },
+  {
+    "name": "site dimImages true overrides global off",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "dimImages": true,
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": true,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "site dimImages false overrides global on",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": true,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "dimImages": false,
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "most specific dimImages wins; a rule without it inherits the parent's",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "dimImages": true,
+          "updatedAt": 1760000000000
+        },
+        "a.example.com": {
+          "mode": "gentle",
+          "updatedAt": 1760000000000
+        },
+        "b.example.com": {
+          "dimImages": false,
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "gentle",
+      "modeIsExplicit": true,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": true,
+      "matchedHost": "a.example.com"
+    }
+  },
+  {
+    "name": "more specific dimImages false beats parent true",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "dimImages": true,
+          "updatedAt": 1760000000000
+        },
+        "b.example.com": {
+          "dimImages": false,
+          "updatedAt": 1760000000000
+        }
+      }
+    },
+    "host": "x.b.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "b.example.com"
+    }
+  },
+  {
+    "name": "nativeDark use trusts the declared dark theme",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "nativeDark": "use",
+          "updatedAt": 1
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": true,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "nativeDark use inherited by subdomain",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "nativeDark": "use",
+          "updatedAt": 1
+        }
+      }
+    },
+    "host": "a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": true,
+      "trustNativeDark": true,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  },
+  {
+    "name": "nativeDark use under a parent's ignore is ignored",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "nativeDark": "ignore",
+          "updatedAt": 1
+        },
+        "a.example.com": {
+          "nativeDark": "use",
+          "updatedAt": 2
+        }
+      }
+    },
+    "host": "a.example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": false,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "a.example.com"
+    }
+  },
+  {
+    "name": "nativeDark use with global respect off does nothing",
+    "settings": {
+      "schemaVersion": 1,
+      "global": {
+        "enabled": {
+          "value": true,
+          "updatedAt": 0
+        },
+        "theme": {
+          "value": "dark",
+          "updatedAt": 0
+        },
+        "respectNativeDark": {
+          "value": false,
+          "updatedAt": 0
+        },
+        "dimImages": {
+          "value": false,
+          "updatedAt": 0
+        }
+      },
+      "sites": {
+        "example.com": {
+          "nativeDark": "use",
+          "updatedAt": 1
+        }
+      }
+    },
+    "host": "example.com",
+    "expected": {
+      "enabled": true,
+      "mode": "full",
+      "modeIsExplicit": false,
+      "theme": "dark",
+      "respectNativeDark": false,
+      "trustNativeDark": false,
+      "dimImages": false,
+      "matchedHost": "example.com"
+    }
+  }
+]

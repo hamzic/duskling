@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Inline styles</title>
+<!-- Light fixture: colors in style attributes, legacy presentational attributes (bgcolor, color, <font>) and
+     element.style writes after load. -->
+</head>
+<body style="margin: 0; background-color: #ffffff; color: #222222; font: 16px/1.5 system-ui, sans-serif">
+<div style="background: #f6f6f6; border-bottom: 1px solid #dddddd; padding: 12px 24px; color: #111111">Inline header</div>
+<div style="max-width: 720px; margin: 0 auto; padding: 24px">
+  <p style="color: #333333">Paragraph with an inline color.</p>
+  <div style="background-color: rgb(255, 255, 255); border: 1px solid rgb(220, 220, 220); padding: 12px; margin-bottom: 12px">
+    White box written with rgb().
+  </div>
+  <div style="background: hsl(0 0% 97%); color: hsl(0 0% 20%); padding: 12px; margin-bottom: 12px">HSL colors inline.</div>
+  <table bgcolor="#ffffff" border="1" bordercolor="#cccccc" cellpadding="6" style="border-collapse: collapse; margin-bottom: 12px">
+    <tr bgcolor="#f0f0f0"><th>Name</th><th>Value</th></tr>
+    <tr><td bgcolor="white">Alpha</td><td><font color="#444444">legacy font color</font></td></tr>
+    <tr><td>Beta</td><td style="background: #fafafa">inline cell</td></tr>
+  </table>
+  <div id="late" style="padding: 12px">This box gets a white background and dark text from script after load.</div>
+  <p><a href="#" style="color: #0645ad">Inline link color</a></p>
+</div>
+<script>
+  window.addEventListener("load", () => {
+    const el = document.getElementById("late");
+    el.style.backgroundColor = "#ffffff";
+    el.style.color = "#2b2b2b";
+    el.style.border = "1px solid #e0e0e0";
+  });
+</script>
+</body>
+</html>

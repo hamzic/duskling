@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Channel tokens</title>
+<!-- Light fixture: a design-token system where each color variable is rgb()/rgba()/hsl() over a channel-triple variable
+     (`--fg: rgb(var(--gray-700-rgb))`), semantic variables chain to those, and text and surfaces use the semantic ones
+     plainly. Wide-gamut twins (`color(display-p3 var(--…-p3))`) sit under @media (dynamic-range: high) and @supports.
+     Seen on a newsletter platform's article pages: the text kept the light theme's dark gray on Duskling's dark canvas. -->
+<style>
+  @layer tokens, components;
+  @layer tokens {
+    :root {
+      --gray-0-rgb: 255, 255, 255;
+      --gray-50-rgb: 247 247 247;
+      --gray-200-rgb: 221, 221, 221;
+      --gray-700-rgb: 54, 55, 55;
+      --gray-500-hsl: 0 0% 46%;
+      --gray-0-p3: 1 1 1;
+      --gray-700-p3: .212 .216 .216;
+      --light-bg-primary: rgb(var(--gray-0-rgb));
+      --light-bg-secondary: rgb(var(--gray-50-rgb) / 1);
+      --light-fg-primary: rgb(var(--gray-700-rgb));
+      --light-fg-secondary: hsl(var(--gray-500-hsl));
+      --light-border: rgba(var(--gray-200-rgb), 1);
+    }
+    @media (dynamic-range: high) {
+      @supports (color: color(display-p3 0 0 0)) {
+        :root { --light-bg-primary: color(display-p3 var(--gray-0-p3)); --light-fg-primary: color(display-p3 var(--gray-700-p3)); }
+      }
+    }
+    :root, .light-theme {
+      --bg-primary: var(--light-bg-primary);
+      --bg-secondary: var(--light-bg-secondary);
+      --fg-primary: var(--light-fg-primary);
+      --fg-secondary: var(--light-fg-secondary);
+      --border: var(--light-border);
+    }
+  }
+  @layer components {
+    html, body { margin: 0; font: 17px/1.6 Georgia, serif; }
+    body { background: var(--bg-primary); color: var(--fg-primary); }
+    .top-bar { background: var(--bg-primary); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; justify-content: space-between; }
+    .top-bar .name { font-weight: bold; color: var(--fg-primary); }
+    .top-bar a { color: var(--fg-secondary); }
+    .banner { background: var(--bg-secondary); color: var(--fg-primary); margin: 16px 20px; padding: 12px 16px; border-radius: 12px; }
+    article { max-width: 680px; margin: 0 auto; padding: 0 20px 40px; }
+    h1 { color: var(--fg-primary); font-family: system-ui, sans-serif; }
+    .subtitle { color: var(--fg-secondary); }
+    .byline { color: var(--fg-secondary); text-transform: uppercase; font-size: 14px; }
+    .body p { color: var(--fg-primary); }
+  }
+</style>
+</head>
+<body>
+<header class="top-bar"><span class="name">Rebound Weekly</span><a href="#">Sign in</a></header>
+<div class="banner">Read distraction-free in the app</div>
+<article>
+  <h1>Industry deep dive: wafer fab equipment</h1>
+  <p class="subtitle">Five vendors, one supply chain</p>
+  <p class="byline">Sep 14, 2026 · Paid</p>
+  <div class="body">
+    <p>In this article, we share an industry primer on the machines that enable the creation of semiconductor wafers.</p>
+    <p>The companies that sell these machines are few in number and underpin the entire industry.</p>
+    <p>This enables them to generate superior returns on capital over a full cycle.</p>
+  </div>
+</article>
+</body>
+</html>

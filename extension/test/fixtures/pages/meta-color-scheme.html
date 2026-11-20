@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<title>Meta color-scheme</title>
+<!-- A page that declares color-scheme "light dark" and uses system colors and light-dark(). It has no
+     hard-coded light surfaces. -->
+<style>
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; background: Canvas; color: CanvasText; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px; }
+  .card { background: light-dark(#f4f4f6, #1d1d21); color: light-dark(#222226, #e6e6ea); border: 1px solid light-dark(#dddde2, #3a3a40); padding: 16px; border-radius: 8px; }
+  a { color: LinkText; }
+</style>
+</head>
+<body>
+<main>
+  <h1>System colors</h1>
+  <p>Body text uses CanvasText on Canvas. <a href="#">LinkText link</a>.</p>
+  <div class="card">Card colors from light-dark().</div>
+  <p><button>System button</button> <input placeholder="System input"></p>
+</main>
+</body>
+</html>

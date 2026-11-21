@@ -1,7 +1,14 @@
 name: A site looks wrong
 description: Text you can't read, a light area left over, or something broken on one site.
 labels: ["broken site"]
+# "Report a problem" in the app and the Safari popup opens this form with `host`, `settings` and `versions` filled in
+# through URL query parameters, keyed by each field's `id`. GitHub documents URL prefill for text fields only, so every
+# prefilled field is an input, not a dropdown:
+# https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue#creating-an-issue-from-a-url-query
 body:
+  - type: markdown
+    attributes:
+      value: This issue is public. Check that the fields below contain nothing you don't want to share.
   - type: input
     id: host
     attributes:
@@ -9,13 +16,11 @@ body:
       description: The host name only, for example example.com. Don't paste full addresses that contain personal information.
     validations:
       required: true
-  - type: dropdown
-    id: theme
+  - type: input
+    id: settings
     attributes:
-      label: Theme
-      options: ["Dark", "Midnight", "Dim"]
-    validations:
-      required: true
+      label: Duskling settings on this site
+      placeholder: "Mode: full · Theme: dark · Site's own dark theme: none"
   - type: textarea
     id: what
     attributes:
@@ -27,4 +32,4 @@ body:
     id: versions
     attributes:
       label: Duskling and iOS versions
-      placeholder: Duskling 1.0, iOS 27.2, iPhone
+      placeholder: Duskling 1.0.1 · iOS 27.2 · iPhone

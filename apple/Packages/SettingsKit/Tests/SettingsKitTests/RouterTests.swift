@@ -55,6 +55,22 @@ private func router(
         #expect(seen.at == 777)
     }
 
+    @Test func pageSeenRecordsWebsiteAccessAndHeartbeat() throws {
+        let (r, _, group) = router(now: 888)
+        #expect(Heartbeat.lastPageSeen(in: group) == nil)
+        let out = try object(r.handle(fixture("page-seen-request")))
+        #expect(out == (try object(fixture("heartbeat-response"))))
+        #expect(Heartbeat.lastPageSeen(in: group) == 888)
+        #expect(Heartbeat.lastSeen(in: group)?.version == "1.0.0")
+    }
+
+    @Test func plainHeartbeatDoesNotClaimWebsiteAccess() throws {
+        let (r, _, group) = router(now: 5)
+        _ = r.handle(try fixture("heartbeat-request"))
+        #expect(Heartbeat.lastSeen(in: group) != nil)
+        #expect(Heartbeat.lastPageSeen(in: group) == nil)
+    }
+
     @Test func syncAndDeviceInfoAlsoRecordHeartbeat() throws {
         let (r1, _, g1) = router(now: 11)
         _ = r1.handle(try fixture("sync-request"))
@@ -82,7 +98,7 @@ private func router(
         let (r, _, group) = router()
         let expected = try object(fixture("error-response"))
         let bad = [
-            "not json", "[]", "3", "{}", #"{"type":"nope"}"#, #"{"type":"heartbeat"}"#, #"{"type":"heartbeat","version":3}"#,
+            "not json", "[]", "3", "{}", #"{"type":"nope"}"#, #"{"type":"heartbeat"}"#, #"{"type":"heartbeat","version":3}"#, #"{"type":"pageSeen"}"#,
             #"{"type":"sync"}"#, #""sync""#, #"{"type":"sync","settings":{"schemaVersion":true,"global":{},"sites":{}}}"#,
             #"{"type":"sync","settings":{"schemaVersion":1.5,"global":{},"sites":{}}}"#,
             #"{"type":"sync","settings":{"schemaVersion":"1","global":{},"sites":{}}}"#, #"{"type":"sync","settings":{"schemaVersion":2,"global":{},"sites":{}}}"#,
@@ -94,6 +110,7 @@ private func router(
         }
         #expect(group.data(forKey: "settings.v1") == nil)
         #expect(Heartbeat.lastSeen(in: group) == nil)
+        #expect(Heartbeat.lastPageSeen(in: group) == nil)
     }
 
     @Test func failingStoreGivesStorageUnavailable() throws {

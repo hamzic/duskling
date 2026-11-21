@@ -56,6 +56,13 @@ public struct NativeMessageRouter: Sendable {
             guard let version = obj["version"] as? String else { throw Failure.bad_request }
             do { try Heartbeat.write(version: version, in: group, now: now()) } catch { throw Failure.storage_unavailable }
             return ["ok": true]
+        case "pageSeen":
+            guard let version = obj["version"] as? String else { throw Failure.bad_request }
+            do {
+                try Heartbeat.write(version: version, in: group, now: now())
+                try Heartbeat.writePage(in: group, now: now())
+            } catch { throw Failure.storage_unavailable }
+            return ["ok": true]
         case "deviceInfo":
             let d = device()
             Heartbeat.record(version: d.appVersion, in: group, now: now())

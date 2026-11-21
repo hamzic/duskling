@@ -9,7 +9,7 @@ final class HomeUITests: XCTestCase {
     @MainActor
     private func launch(_ extra: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-uitest", "-uitest-onboarded", "-uitest-heartbeat"] + extra
+        app.launchArguments = ["-uitest", "-uitest-onboarded", "-uitest-heartbeat", "-uitest-page-seen"] + extra
         app.launch()
         XCTAssertTrue(app.switches["home.toggle"].waitForExistence(timeout: 10))
         return app
@@ -88,5 +88,18 @@ final class HomeUITests: XCTestCase {
         XCTAssertTrue(about.exists)
         XCTAssertFalse(app.buttons["home.tips"].exists)
         XCTAssertFalse(app.buttons["Support development"].exists)
+    }
+
+    /// Turned on but never ran on a page: Home says so and opens setup at the Safari step.
+    @MainActor
+    func testNeedsWebsiteAccessOpensTheSafariStep() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-uitest", "-uitest-onboarded", "-uitest-heartbeat"]
+        app.launch()
+        let status = app.buttons["home.status"]
+        XCTAssertTrue(status.waitForExistence(timeout: 10))
+        XCTAssertTrue(status.label.contains("Needs website access"), status.label)
+        status.tap()
+        XCTAssertTrue(app.buttons["onboarding.safari.next"].waitForExistence(timeout: 5))
     }
 }

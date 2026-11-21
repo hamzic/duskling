@@ -83,6 +83,7 @@ export function createBackground(api: BackgroundApi) {
   }
 
   let lastHeartbeat = -Infinity;
+  let lastPageSeen = -Infinity;
   let lastTabSync = -Infinity;
   let lastVisibleSync = -Infinity;
   // In-memory only: if Safari unloads the non-persistent background inside the 250 ms window, the pending
@@ -130,6 +131,16 @@ export function createBackground(api: BackgroundApi) {
           jobs.push(nativeSync.heartbeat());
         }
         return Promise.all(jobs).then(() => undefined);
+      }
+      case "pageSeen": {
+        // Only the fact that a page ran a content script; sender.tab and sender.url are not read.
+        const now = Date.now();
+        if (now - lastPageSeen < HEARTBEAT_THROTTLE_MS) return Promise.resolve(undefined);
+        lastPageSeen = now;
+        // Not recorded (app storage unavailable): let the next page try again, or setup would wait an hour.
+        return nativeSync.pageSeen().then((ok) => {
+          if (!ok) lastPageSeen = -Infinity;
+        });
       }
       case "syncSettings": {
         // An iOS app can't message its extension, so app changes are pulled when Safari comes back to the front.

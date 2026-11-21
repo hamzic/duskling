@@ -14,7 +14,7 @@ final class SplitViewUITests: XCTestCase {
         defer { XCUIDevice.shared.orientation = .portrait }
 
         let app = XCUIApplication()
-        app.launchArguments = ["-uitest", "-uitest-onboarded", "-uitest-heartbeat", "-uitest-seed-sites"]
+        app.launchArguments = ["-uitest", "-uitest-onboarded", "-uitest-heartbeat", "-uitest-page-seen", "-uitest-seed-sites"]
         app.launch()
         let toggle = app.switches["home.toggle"]
         XCTAssertTrue(toggle.waitForExistence(timeout: 10))

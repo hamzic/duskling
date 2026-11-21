@@ -13,22 +13,17 @@ struct HomeView: View {
 
     @Environment(AppModel.self) private var model
     @Environment(\.openURL) private var openURL
-    @State private var showsSetup = false
-    @State private var draft: (subject: String, body: String, mailto: URL)?
+    /// Where setup opens; non-nil shows it. `sheet(item:)` builds the sheet from this value, so it opens at the step
+    /// that was tapped (with `isPresented` the content could be built from the previous value).
+    @State private var setupStart: OnboardingView.Step?
 
     var body: some View {
         list
             // DESIGN.md: "The system switch, tinted Ember." Toggle doesn't pick up the app accent on its own.
             .tint(Color.accentColor)
             .navigationTitle(Brand.name)
-            .sheet(isPresented: $showsSetup) {
-                OnboardingView(start: .enable) { showsSetup = false }
-            }
-            .sheet(isPresented: Binding(get: { draft != nil }, set: { if !$0 { draft = nil } })) {
-                if let draft {
-                    ReportComposer(subject: draft.subject, body: draft.body) { self.draft = nil }
-                        .ignoresSafeArea()
-                }
+            .sheet(item: $setupStart) { start in
+                OnboardingView(start: start) { setupStart = nil }
             }
     }
 
@@ -88,29 +83,35 @@ struct HomeView: View {
             LabeledContent("Safari extension") { Text("Paused") }
                 .accessibilityIdentifier("home.status")
         case .notSetUp:
-            Button {
-                showsSetup = true
-            } label: {
-                LabeledContent("Safari extension") {
-                    HStack(spacing: 8) {
-                        Text("Not set up yet").foregroundStyle(.secondary)
-                        Image(systemName: "chevron.forward")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(.tertiary)
-                            .accessibilityHidden(true)
-                    }
-                }
-            }
-            .foregroundStyle(.primary)
-            .accessibilityIdentifier("home.status")
-            .accessibilityHint("home.setUp.hint")
+            setupButton("Not set up yet", start: .enable)
+        case .needsWebsiteAccess:
+            // Turned on in Settings, but Safari hasn't let it into any website: the step people miss.
+            setupButton("Needs website access", start: .safari)
         }
     }
 
-    /// In-app Mail composer; falls back to the `mailto:` draft when Mail isn't set up.
+    private func setupButton(_ state: LocalizedStringKey, start: OnboardingView.Step) -> some View {
+        Button {
+            setupStart = start
+        } label: {
+            LabeledContent("Safari extension") {
+                HStack(spacing: 8) {
+                    Text(state).foregroundStyle(.secondary)
+                    Image(systemName: "chevron.forward")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.tertiary)
+                        .accessibilityHidden(true)
+                }
+            }
+        }
+        .foregroundStyle(.primary)
+        .accessibilityIdentifier("home.status")
+        .accessibilityHint("home.setUp.hint")
+    }
+
+    /// Opens the repository's issue list in the browser.
     private func report() {
-        let current = ReportDraft.current(model: model)
-        if ReportComposer.canSend { draft = current } else { openURL(current.mailto) }
+        if let url = ReportLink.issues() { openURL(url) }
     }
 
     private func binding(_ field: WritableKeyPath<Global, Stamped<Bool>>) -> Binding<Bool> {

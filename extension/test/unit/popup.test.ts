@@ -412,59 +412,21 @@ describe("popup", () => {
   });
 
   describe("report", () => {
-    const device = { model: "iPad", osVersion: "18.2", appVersion: "1.2.3" };
-
-    it("builds the exact mailto with only the host", async () => {
+    it("opens the repository's issue list, with nothing about the page in it", async () => {
       const { log } = await open({
         url: "https://www.example.com/secret/path?token=abc#frag",
         status: { mode: "gentle", theme: "midnight", nativeDark: "ignored" },
-        device,
       });
       await click("#report");
-      expect(log.runtime).toContainEqual({ type: "deviceInfo" });
-      expect(log.created).toHaveLength(1);
-      const url = log.created[0]!;
-      expect(url).not.toMatch(/secret|path|token|abc|frag|www\./);
-      const parsed = new URL(url);
-      expect(parsed.protocol).toBe("mailto:");
-      expect(parsed.pathname).toBe(BRAND.reportEmail);
-      const params = new URLSearchParams(parsed.search);
-      expect(params.get("subject")).toBe("Site problem: example.com");
-      expect(params.get("body")).toBe(
-        [
-          "Site: example.com",
-          "Mode: gentle",
-          "Theme: midnight",
-          "Site's own dark theme: ignored",
-          `${BRAND.name} 1.2.3 · iOS 18.2 · iPad`,
-          "",
-          "What looks wrong? (A screenshot helps.)",
-        ].join("\r\n"),
-      );
-      // RFC 6068: spaces as %20, never "+".
-      expect(url).not.toContain("+");
-    });
-
-    it("uses unknown device fields when the background has no device", async () => {
-      const { log } = await open({ device: null });
-      await click("#report");
-      const body = new URLSearchParams(new URL(log.created[0]!).search).get("body")!;
-      expect(body).toContain(`${BRAND.name} 1.2.3 · iOS unknown · unknown`);
-    });
-
-    it("reports the current mode after a site change", async () => {
-      const { log } = await open({ device });
-      await click("#site-toggle");
-      await click("#report");
-      const body = new URLSearchParams(new URL(log.created[0]!).search).get("body")!;
-      expect(body).toContain("Mode: off");
+      expect(log.created).toEqual([`${BRAND.repoUrl}/issues`]);
+      expect(log.runtime).not.toContainEqual({ type: "deviceInfo" });
     });
 
     it("falls back to location when tabs.create rejects", async () => {
       const assign = vi.fn();
-      const { log } = await open({ device, createRejects: true });
+      const { log } = await open({ createRejects: true });
       const popup = await import("../../src/popup/popup");
-      popup.mailtoFallback.open = assign;
+      popup.reportFallback.open = assign;
       await click("#report");
       expect(log.created).toHaveLength(1);
       expect(assign).toHaveBeenCalledWith(log.created[0]);

@@ -19,7 +19,7 @@ leaves sites that are already dark alone.
 - Per site in the Safari popup: turn dark mode off, pick a theme, use or ignore the site's own dark theme, and dim images.
 - Respects a site's own dark theme when it has one.
 - Optional dimming of images.
-- Report a broken site by email. Only the host name is included, and you review the draft before sending.
+- Report a broken site on GitHub. "Report a problem" opens the issue list; the link carries nothing about the site.
 - Settings sync between the app and the Safari extension on your device, and between your devices through iCloud.
 
 ## Privacy

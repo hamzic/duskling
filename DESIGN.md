@@ -61,6 +61,13 @@ Text meets WCAG 4.5:1 in both appearances. Targets are at least 44 pt. Dynamic T
 
 ## Review log
 
+- 2026-11-21 (app, setup for 1.0.1): Setup is Welcome, Settings, Safari, Check. Welcome shows a light page and the same
+  page dark; Settings shows Duskling's page in Settings as it looks when set up (a picture, not controls). The new
+  Safari step shows the address bar's page menu button (1) and Duskling in Safari's menu (2), ringed in Ember. Check has
+  one row per condition (Turned on in Settings, Allowed on websites) with a check mark, a spinner for the one being
+  waited for, or an empty circle. Actions stay quiet Ember text buttons ("I've done this" became "Next"); the button area
+  is opaque so a tall step scrolls under it.
+
 - 2026-10-18 (app, review): Secondary text stays the iOS system secondary label color for footers,
   captions and summaries (the token table above lists the iOS values, and the system color adapts under Increase
   Contrast). Key content, such as onboarding body text and the onboarding status line, uses the primary label color.

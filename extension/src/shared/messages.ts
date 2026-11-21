@@ -3,6 +3,8 @@ import type { Mode, Settings, ThemeId } from "./types";
 export type NativeRequest =
   | { type: "sync"; settings: Settings }
   | { type: "heartbeat"; version: string }
+  // A content script ran on a page, so Safari let the extension into at least one website. Nothing about the page.
+  | { type: "pageSeen"; version: string }
   | { type: "deviceInfo" };
 
 export type NativeResponse =
@@ -15,6 +17,8 @@ export type RuntimeMessage =
   | { type: "popupOpened" }
   // content (top frame) → background when the page becomes visible: the user may be back from the app
   | { type: "syncSettings" }
+  // content (top frame) → background once per page: the extension has website access (no URL, host or content)
+  | { type: "pageSeen" }
   // popup → background → native; device and OS come from native, never from the user agent (iPad Safari reports a Mac UA)
   | { type: "deviceInfo" };
 
@@ -44,7 +48,8 @@ export function isNativeRequest(x: unknown): x is NativeRequest {
   if (!isRecord(x)) return false;
   switch (x["type"]) {
     case "sync": return isSettingsShape(x["settings"]);
-    case "heartbeat": return typeof x["version"] === "string";
+    case "heartbeat":
+    case "pageSeen": return typeof x["version"] === "string";
     case "deviceInfo": return true;
     default: return false;
   }

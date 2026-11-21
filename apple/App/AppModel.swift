@@ -4,6 +4,8 @@ import SettingsKit
 
 enum ExtensionStatus: Equatable {
     case notSetUp
+    /// Turned on in Settings, but no content script has run on a page yet: Safari hasn't been allowed into any website.
+    case needsWebsiteAccess
     case working(version: String)
     case paused
 }
@@ -23,6 +25,10 @@ final class AppModel {
 
     private(set) var settings: Settings
     private(set) var extensionStatus: ExtensionStatus = .notSetUp
+    /// The extension has run in Safari (it's turned on in Settings).
+    private(set) var isTurnedOn = false
+    /// A content script has run on a page, which Safari allows only on websites the user granted access to.
+    private(set) var hasWebsiteAccess = false
     /// Same key and store as `@AppStorage("onboarding.done")`; kept here so the model owns it and tests can inject the
     /// defaults (`@AppStorage` itself can't sit inside an `@Observable` class).
     var hasCompletedOnboarding: Bool {
@@ -111,11 +117,20 @@ final class AppModel {
     }
 
     private func updateStatus() {
-        guard let seen = Heartbeat.lastSeen(in: group) else {
+        let seen = Heartbeat.lastSeen(in: group)
+        isTurnedOn = seen != nil
+        hasWebsiteAccess = Heartbeat.lastPageSeen(in: group) != nil
+        guard let seen else {
             extensionStatus = .notSetUp
             return
         }
-        extensionStatus = settings.global.enabled.value ? .working(version: seen.version) : .paused
+        if !settings.global.enabled.value {
+            extensionStatus = .paused
+        } else if !hasWebsiteAccess {
+            extensionStatus = .needsWebsiteAccess
+        } else {
+            extensionStatus = .working(version: seen.version)
+        }
     }
 }
 
@@ -124,8 +139,10 @@ extension AppModel {
     /// and a scratch defaults suite that's wiped on launch, so tests never touch the real App Group, iCloud or defaults.
     enum LaunchFlag: String {
         case uiTest = "-uitest"
-        /// Seeds an extension heartbeat.
+        /// Seeds an extension heartbeat (turned on in Settings).
         case heartbeat = "-uitest-heartbeat"
+        /// Seeds a content-script run on a page (website access granted).
+        case pageSeen = "-uitest-page-seen"
         /// Seeds two site rules.
         case seedSites = "-uitest-seed-sites"
         /// Starts with onboarding already done.
@@ -155,6 +172,9 @@ extension AppModel {
         }
         if arguments.contains(LaunchFlag.heartbeat.rawValue) {
             Heartbeat.record(version: Brand.version, in: group, now: now)
+        }
+        if arguments.contains(LaunchFlag.pageSeen.rawValue) {
+            Heartbeat.recordPage(in: group, now: now)
         }
         if arguments.contains(LaunchFlag.onboarded.rawValue) {
             defaults.set(true, forKey: onboardingKey)

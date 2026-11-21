@@ -71,6 +71,12 @@ export class NativeSync {
     });
   }
 
+  /** A content script ran on a page: the app's setup check shows website access. Only the version is sent.
+   *  Resolves true when the app recorded it. */
+  pageSeen(): Promise<boolean> {
+    return this.enqueue(async () => (await this.request({ type: "pageSeen", version: this.deps.version() }, "pageSeen")) !== null);
+  }
+
   /** The device the app reports (iPad Safari sends a Mac user agent); null when native is unavailable. */
   deviceInfo(): Promise<Device | null> {
     return this.enqueue(async () => (await this.request({ type: "deviceInfo" }, "deviceInfo"))?.device ?? null);

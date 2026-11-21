@@ -34,7 +34,7 @@
   "popupPauseEverywhere": { "message": "Pause everywhere", "description": "Popup: global pause switch" },
   "popupPausedBanner": { "message": "Paused everywhere", "description": "Popup: banner while paused" },
   "popupResume": { "message": "Resume", "description": "Popup: ends the global pause" },
-  "popupReport": { "message": "Report a problem with this site", "description": "Popup: opens an email draft" },
+  "popupReport": { "message": "Report a problem with this site", "description": "Popup: opens the project's GitHub issues" },
   "popupNoAccessTitle": { "message": "Duskling can't see this page yet.", "description": "Popup: no permission for this page" },
   "popupNoAccessBody": {
     "message": "Tap the puzzle icon in the address bar, choose Duskling, then Always Allow on Every Website.",

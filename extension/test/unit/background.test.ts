@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { handleFetchResource, hostClass, MAX_BYTES } from "../../src/background/fetch-resource";
-import { VISIBLE_SYNC_THROTTLE_MS, createBackground } from "../../src/background/index";
+import { HEARTBEAT_THROTTLE_MS, VISIBLE_SYNC_THROTTLE_MS, createBackground } from "../../src/background/index";
 import { NATIVE_TIMEOUT_MS, NativeSync } from "../../src/background/native-sync";
 import { planRegistrations } from "../../src/background/registrations";
 import type { NativeRequest } from "../../src/shared/messages";
@@ -316,6 +316,36 @@ describe("native sync", () => {
     m.onActivated.fire({ tabId: 10, windowId: 1 });
     await settle();
     expect(m.log.native).toHaveLength(2);
+  });
+
+  it("pageSeen (a content script ran on a page) reaches native at most once per hour, without the page", async () => {
+    const m = mockBrowser();
+    createBackground(m.api);
+    const seen = async () => {
+      await m.onMessage.fire({ type: "pageSeen" }, { ...OWN, tab: { id: 1, url: "https://private.example/x" } }, () => {})[0];
+      await settle();
+    };
+    await seen();
+    await seen();
+    expect(m.log.native).toEqual([{ type: "pageSeen", version: "1.2.3" }]);
+    await vi.advanceTimersByTimeAsync(HEARTBEAT_THROTTLE_MS);
+    await seen();
+    expect(m.log.native.filter((x) => x.type === "pageSeen")).toHaveLength(2);
+  });
+
+  it("a pageSeen that native couldn't record is sent again on the next page", async () => {
+    const m = mockBrowser();
+    createBackground(m.api);
+    const seen = async () => {
+      await m.onMessage.fire({ type: "pageSeen" }, OWN, () => {})[0];
+      await settle();
+    };
+    m.state.native = () => ({ ok: false, error: "storage_unavailable" });
+    await seen();
+    m.state.native = () => ({ ok: true });
+    await seen();
+    await seen();
+    expect(m.log.native.filter((x) => x.type === "pageSeen")).toHaveLength(2);
   });
 
   it("syncSettings (a page became visible) syncs at most once per 2 s", async () => {

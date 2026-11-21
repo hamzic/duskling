@@ -3,7 +3,7 @@ import { isNativeRequest, isNativeResponse } from "../../src/shared/messages";
 import { DEFAULT_SETTINGS } from "../../src/shared/settings";
 import { loadShared } from "./shared-fixtures";
 
-const requests = ["sync-request", "heartbeat-request", "device-info-request"];
+const requests = ["sync-request", "heartbeat-request", "page-seen-request", "device-info-request"];
 const responses = ["sync-response", "heartbeat-response", "device-info-response", "error-response"];
 
 describe("protocol fixtures", () => {
@@ -32,7 +32,7 @@ describe("guards reject malformed input", () => {
     expect(isNativeResponse({ ok: true })).toBe(true);
   });
   it("isNativeRequest", () => {
-    for (const bad of [null, {}, { type: "sync" }, { type: "heartbeat" }, { type: "bogus" }, { type: "sync", settings: {} }]) {
+    for (const bad of [null, {}, { type: "sync" }, { type: "heartbeat" }, { type: "pageSeen" }, { type: "bogus" }, { type: "sync", settings: {} }]) {
       expect(isNativeRequest(bad)).toBe(false);
     }
   });

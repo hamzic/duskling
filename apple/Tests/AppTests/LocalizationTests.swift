@@ -31,7 +31,7 @@ final class LocalizationTests: XCTestCase {
     func testCatalogCoversEveryScreen() throws {
         let keys = Set(try catalog().strings.keys)
         let sample = [
-            "Dark mode for every website.", "onboarding.enable.title", "Open any website in Safari.", "Waiting for Safari…",
+            "Dark mode for every website.", "onboarding.enable.title", "onboarding.safari.title", "onboarding.check.title",
             "Dark mode", "Use sites' own dark themes", "Dark theme", "Sites you change in Safari appear here.",
             "Gentle style", "Open-source licenses", "Version", "Report a problem",
         ]

@@ -4,8 +4,8 @@ APP_GROUP_ID = group.io.github.hamzic.dusk
 REPORT_EMAIL = developer@defec8ed.com
 // "//" starts a comment in an xcconfig, so the empty $() splits it (verified by BrandRepoTests).
 REPO_URL = https:/$()/github.com/hamzic/duskling
-MARKETING_VERSION = 1.0.0
-CURRENT_PROJECT_VERSION = 1
+MARKETING_VERSION = 1.0.1
+CURRENT_PROJECT_VERSION = 2
 IPHONEOS_DEPLOYMENT_TARGET = 18.0
 TARGETED_DEVICE_FAMILY = 1,2
 SWIFT_VERSION = 6.0

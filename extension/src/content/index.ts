@@ -163,6 +163,9 @@ export function runContent(d: ContentDeps): void {
     // Settings changed in the app reach the extension only when it asks (an iOS app can't message its extension), and the
     // user comes back from the app to a page becoming visible. The top frame asks; the background throttles.
     if (win === win.top) {
+      // Safari runs content scripts only on websites the user allowed, so this reaching the app is how its setup check
+      // knows the extension has website access. The background throttles; nothing about the page is sent.
+      api.runtime.sendMessage({ type: "pageSeen" }).catch(() => undefined);
       doc.addEventListener("visibilitychange", () => {
         if (doc.visibilityState === "visible") api.runtime.sendMessage({ type: "syncSettings" }).catch(() => undefined);
       });

@@ -1,6 +1,6 @@
 # Privacy
 
-Last updated: 2026-11-19.
+Last updated: 2026-11-21.
 
 Duskling is an open-source project maintained by an independent developer ("we", "us" below). Contact:
 developer@defec8ed.com.
@@ -8,8 +8,7 @@ developer@defec8ed.com.
 Duskling collects no data. It has no servers of its own, no analytics, no crash reporting and no accounts, and it never
 sends anything about you or what you browse to us or to anyone else. Its only network requests are fetches of style
 sheets and images that the page you're viewing already references, described below. The App Store privacy label says
-"Data Not Collected". The one exception is a problem report you choose to email us yourself (see "Reporting a site
-problem").
+"Data Not Collected". Reporting a problem happens on GitHub, outside Duskling (see "Reporting a site problem").
 
 ## What stays on your device
 
@@ -17,6 +16,9 @@ Your settings (theme, mode, per-site choices) are stored on your device. The app
 through an App Group. The app syncs them between your own devices through your iCloud account (iCloud key-value storage,
 operated by Apple). That includes the host names of sites whose settings you changed, such as `example.com`, never full
 addresses or browsing history. We have no access to your iCloud data and no server of our own.
+
+So the app can tell you whether setup worked, the extension also records in the App Group which version of it last ran
+and when it last ran on a page. That's a time only, never which page or site. It stays on your device and isn't synced.
 
 How long it's kept and how to delete it:
 
@@ -61,11 +63,10 @@ you anywhere.
 
 ## Reporting a site problem
 
-"Report a problem" opens a draft email in your mail app. The draft contains the site's host name (never the full address,
-path or query), the mode and theme, whether the site's own dark theme was used, the Duskling and iOS versions and the device
-type (iPhone or iPad). You review it and send it yourself. Duskling sends nothing in the background.
-
-When you send a report, we receive what's in the draft plus your email address, as with any email.
+"Report a problem" opens the project's issue list on GitHub (github.com/hamzic/duskling/issues) in your browser. The link
+contains nothing about you, your device, your settings or the site you were on. To report something you open an issue
+there yourself, which needs a GitHub account. Issues are public, and what you write is handled under GitHub's privacy
+statement. Duskling sends nothing in the background.
 
 ## Contact
 

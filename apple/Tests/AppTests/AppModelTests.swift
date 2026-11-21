@@ -28,15 +28,28 @@ final class AppModelTests: XCTestCase {
         XCTAssertEqual(model.extensionStatus, .notSetUp)
     }
 
-    func testStatusIsWorkingWithHeartbeat() async {
+    /// Turned on in Settings but never ran on a page: Safari hasn't let it into any website yet.
+    func testStatusNeedsWebsiteAccessWithHeartbeatOnly() async {
         Heartbeat.record(version: "1.2.3", in: group, now: 500)
         let model = makeModel()
         await model.refresh()
+        XCTAssertEqual(model.extensionStatus, .needsWebsiteAccess)
+        XCTAssertTrue(model.isTurnedOn)
+        XCTAssertFalse(model.hasWebsiteAccess)
+    }
+
+    func testStatusIsWorkingOnceItRanOnAPage() async {
+        Heartbeat.record(version: "1.2.3", in: group, now: 500)
+        Heartbeat.recordPage(in: group, now: 600)
+        let model = makeModel()
+        await model.refresh()
         XCTAssertEqual(model.extensionStatus, .working(version: "1.2.3"))
+        XCTAssertTrue(model.hasWebsiteAccess)
     }
 
     func testStatusIsPausedWhenDisabled() async {
         Heartbeat.record(version: "1.2.3", in: group, now: 500)
+        Heartbeat.recordPage(in: group, now: 600)
         let model = makeModel()
         await model.refresh()
         model.setGlobal(\.enabled, false)

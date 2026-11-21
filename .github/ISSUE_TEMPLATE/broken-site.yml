@@ -1,9 +1,7 @@
 name: A site looks wrong
 description: Text you can't read, a light area left over, or something broken on one site.
 labels: ["broken site"]
-# "Report a problem" in the app and the Safari popup opens this form with `host`, `settings` and `versions` filled in
-# through URL query parameters, keyed by each field's `id`. GitHub documents URL prefill for text fields only, so every
-# prefilled field is an input, not a dropdown:
+# Text fields, not a dropdown, so a link can prefill them by field `id` if ever needed:
 # https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue#creating-an-issue-from-a-url-query
 body:
   - type: markdown

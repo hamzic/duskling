@@ -1,12 +1,72 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "A light web page becomes a dark web page." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A light web page becomes a dark web page."
+          }
+        }
+      }
+    },
     "About" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "About"
+          }
+        }
+      }
+    },
+    "All Websites" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Websites"
+          }
+        }
+      }
+    },
+    "Allow" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow"
+          }
+        }
+      }
+    },
+    "Allow Extension" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow Extension"
+          }
+        }
+      }
+    },
+    "Allowed on websites" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allowed on websites"
+          }
+        }
+      }
+    },
+    "Back" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
           }
         }
       }
@@ -128,16 +188,6 @@
         }
       }
     },
-    "I've done this" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I've done this"
-          }
-        }
-      }
-    },
     "Images dimmed" : {
       "localizations" : {
         "en" : {
@@ -154,6 +204,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Images not dimmed"
+          }
+        }
+      }
+    },
+    "In Settings, Allow Extension is on and All Websites is set to Allow." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Settings, Allow Extension is on and All Websites is set to Allow."
           }
         }
       }
@@ -190,6 +250,26 @@
         }
       }
     },
+    "Needs website access" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Needs website access"
+          }
+        }
+      }
+    },
+    "Next" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        }
+      }
+    },
     "Not set up yet" : {
       "comment" : "Home: extension status; opens setup",
       "localizations" : {
@@ -197,6 +277,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Not set up yet"
+          }
+        }
+      }
+    },
+    "Not yet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not yet"
+          }
+        }
+      }
+    },
+    "Not yet. Go back to step 2." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not yet. Go back to step 2."
+          }
+        }
+      }
+    },
+    "Not yet. Go back to step 3." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not yet. Go back to step 3."
           }
         }
       }
@@ -222,6 +332,16 @@
         }
       }
     },
+    "Open Safari" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Safari"
+          }
+        }
+      }
+    },
     "Open Settings" : {
       "localizations" : {
         "en" : {
@@ -232,12 +352,12 @@
         }
       }
     },
-    "Open any website in Safari." : {
+    "Open any website in **Safari**." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open any website in Safari."
+            "value" : "Open any website in **Safari**."
           }
         }
       }
@@ -387,12 +507,42 @@
         }
       }
     },
+    "Tap **Always Allow…**, then **Always Allow on Every Website**." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap **Always Allow…**, then **Always Allow on Every Website**."
+          }
+        }
+      }
+    },
     "Theme" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Theme"
+          }
+        }
+      }
+    },
+    "This updates by itself." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This updates by itself."
+          }
+        }
+      }
+    },
+    "Turned on in Settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turned on in Settings"
           }
         }
       }
@@ -418,12 +568,22 @@
         }
       }
     },
-    "Waiting for Safari…" : {
+    "Websites in Safari now open dark." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Waiting for Safari…"
+            "value" : "Websites in Safari now open dark."
+          }
+        }
+      }
+    },
+    "What it looks like in Settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What it looks like in Settings"
           }
         }
       }
@@ -435,6 +595,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Working"
+          }
+        }
+      }
+    },
+    "You're all set." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're all set."
           }
         }
       }
@@ -469,12 +639,22 @@
         }
       }
     },
+    "onboarding.check.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking Duskling…"
+          }
+        }
+      }
+    },
     "onboarding.enable.step2" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap **Duskling** and turn it on."
+            "value" : "Tap **Duskling**, turn on **Allow Extension**."
           }
         }
       }
@@ -489,12 +669,32 @@
         }
       }
     },
-    "onboarding.verify.working" : {
+    "onboarding.safari.picture" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Duskling is working."
+            "value" : "Safari: the menu button in the address bar, and Duskling in its menu, marked Permission Required."
+          }
+        }
+      }
+    },
+    "onboarding.safari.step2" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the menu button in the address bar, then **Duskling**."
+          }
+        }
+      }
+    },
+    "onboarding.safari.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let Duskling see websites."
           }
         }
       }

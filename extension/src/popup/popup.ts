@@ -2,9 +2,8 @@
 //
 // Platform facts (@mdn/browser-compat-data 8.1.6, safari_ios): tabs.query / tabs.sendMessage / tabs.create 15,
 // i18n.getMessage 15, `<input type="checkbox" switch>` (html.elements.input.switch) 17.4, so the system switch is
-// available on the iOS 18 floor. In the Simulator `tabs.create({url: "mailto:…"})` resolved and opened
-// an empty tab (no Mail app there), so the hand-off to Mail is checked on a device; when it rejects we
-// fall back to navigating the popup to the mailto URL.
+// available on the iOS 18 floor. "Report a problem" opens the repository's issue list in a new tab with `tabs.create`;
+// when that rejects we fall back to navigating the popup to the same URL.
 import { BRAND } from "../shared/brand";
 import type { PageStatus, RuntimeMessage } from "../shared/messages";
 import { hostChain, normalizeHost, purgeAndLimit, resolveSiteRule, setGlobal, setSiteFields } from "../shared/rules";
@@ -20,37 +19,17 @@ export type PopupApi = {
   i18n: Browser["i18n"];
 };
 
-/** Fallback when tabs.create rejects for a mailto URL. A seam so tests can observe it. */
-export const mailtoFallback = {
+/** Fallback when tabs.create rejects for the report URL. A seam so tests can observe it. */
+export const reportFallback = {
   open(url: string): void {
     location.href = url;
   },
 };
 
-type Device = { model: string; osVersion: string };
-
-function readDevice(x: unknown): Device {
-  const d = typeof x === "object" && x !== null ? (x as Record<string, unknown>) : {};
-  return {
-    model: typeof d["model"] === "string" ? d["model"] : "unknown",
-    osVersion: typeof d["osVersion"] === "string" ? d["osVersion"] : "unknown",
-  };
-}
-
-/** The report mail. Only the host goes in, never the URL, path or query. Line breaks are CRLF and every component is
- *  percent-encoded (RFC 6068 §2 and §5: spaces as %20, line breaks as %0D%0A). */
-export function reportMailto(r: { host: string; mode: Mode; theme: ThemeId; nativeDark: PageStatus["nativeDark"]; version: string; device: Device }): string {
-  const body = [
-    `Site: ${r.host}`,
-    `Mode: ${r.mode}`,
-    `Theme: ${r.theme}`,
-    `Site's own dark theme: ${r.nativeDark}`,
-    `${BRAND.name} ${r.version} · iOS ${r.device.osVersion} · ${r.device.model}`,
-    "",
-    "What looks wrong? (A screenshot helps.)",
-  ].join("\r\n");
-  const subject = `Site problem: ${r.host}`;
-  return `mailto:${BRAND.reportEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+/** The report link: the repository's issue list, where people can search for the site or open a new issue. Nothing
+ *  about the page goes in it. */
+export function reportUrl(): string {
+  return `${BRAND.repoUrl}/issues`;
 }
 
 function isPageStatus(x: unknown): x is PageStatus {
@@ -247,15 +226,8 @@ export async function initPopup(api: PopupApi, doc: Document = document): Promis
   });
 
   el("report").addEventListener("click", () => {
-    void (async () => {
-      const device = readDevice(await send({ type: "deviceInfo" }).catch(() => null));
-      const url = reportMailto({ host: siteHost, mode, theme, nativeDark, version: api.runtime.getManifest().version, device });
-      try {
-        await api.tabs.create({ url });
-      } catch {
-        mailtoFallback.open(url);
-      }
-    })();
+    const url = reportUrl();
+    api.tabs.create({ url }).catch(() => reportFallback.open(url));
   });
 }
 

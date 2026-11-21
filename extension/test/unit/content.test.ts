@@ -291,12 +291,27 @@ describe("page becoming visible", () => {
   it("asks the background for a settings sync when the top page becomes visible, not when it's hidden", async () => {
     const { m, run } = setup(undefined, { mode: "full", theme: "dark", dimImages: false });
     run();
+    const syncs = () => m.sent.filter((x) => (x as { type?: unknown }).type === "syncSettings");
     setVisibility("hidden");
     await tick();
-    expect(m.sent).toEqual([]);
+    expect(syncs()).toEqual([]);
     setVisibility("visible");
     await tick();
-    expect(m.sent).toEqual([{ type: "syncSettings" }]);
+    expect(syncs()).toEqual([{ type: "syncSettings" }]);
+  });
+
+  it("the top frame tells the background once that it ran on a page, with nothing about the page", async () => {
+    const { m, run } = setup(undefined, { mode: "full", theme: "dark", dimImages: false });
+    run();
+    await tick();
+    for (let i = 0; i < 3; i++) {
+      setVisibility("hidden");
+      setVisibility("visible");
+      await tick();
+    }
+    const of = (type: string) => m.sent.filter((x) => (x as { type?: unknown }).type === type);
+    expect(of("syncSettings")).toHaveLength(3);
+    expect(of("pageSeen")).toEqual([{ type: "pageSeen" }]);
   });
 
   it("a subframe doesn't ask", async () => {
@@ -356,7 +371,7 @@ describe("engine adapters", () => {
     run();
     m.setFetchReply({ ok: true, dataUrl: "data:image/png;base64,AA==", corsOk: true });
     const r = await f.engines[0]!.deps.fetchResource("https://cdn.example.com/a.png", "blob");
-    expect(m.sent).toEqual([{ type: "fetchResource", url: "https://cdn.example.com/a.png", as: "blob" }]);
+    expect(m.sent.filter((x) => (x as { type?: unknown }).type === "fetchResource")).toEqual([{ type: "fetchResource", url: "https://cdn.example.com/a.png", as: "blob" }]);
     expect(r).toEqual({ ok: true, dataUrl: "data:image/png;base64,AA==", corsOk: true });
   });
 

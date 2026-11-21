@@ -16,7 +16,7 @@ final class AccessibilityUITests: XCTestCase {
 
     @MainActor
     private func launchHome(_ extra: [String] = []) -> XCUIApplication {
-        let app = launch(["-uitest-onboarded", "-uitest-heartbeat"] + extra)
+        let app = launch(["-uitest-onboarded", "-uitest-heartbeat", "-uitest-page-seen"] + extra)
         XCTAssertTrue(app.switches["home.toggle"].waitForExistence(timeout: 10))
         return app
     }
@@ -66,9 +66,12 @@ final class AccessibilityUITests: XCTestCase {
         app.buttons["onboarding.setup"].tap()
         XCTAssertTrue(app.buttons["onboarding.openSettings"].waitForExistence(timeout: 5))
         assertInteractiveElementsLabelled(app, "Onboarding enable")
-        app.buttons["I've done this"].tap()
+        app.buttons["onboarding.enable.next"].tap()
+        XCTAssertTrue(app.buttons["onboarding.openSafari"].waitForExistence(timeout: 5))
+        assertInteractiveElementsLabelled(app, "Onboarding Safari")
+        app.buttons["onboarding.safari.next"].tap()
         XCTAssertTrue(app.buttons["onboarding.done"].waitForExistence(timeout: 5))
-        assertInteractiveElementsLabelled(app, "Onboarding verify")
+        assertInteractiveElementsLabelled(app, "Onboarding check")
     }
 
     /// At the largest accessibility text size, each Home switch can still be reached and tapped. The launch argument sets
@@ -83,10 +86,11 @@ final class AccessibilityUITests: XCTestCase {
         XCTAssertGreaterThan(app.switches["home.toggle"].frame.height, regularHeight * 1.5, "text size didn't apply")
         for id in ["home.toggle", "home.nativeDark", "home.dimImages"] {
             let row = app.switches[id]
-            for _ in 0..<8 where !row.isHittable { app.swipeUp() }
-            XCTAssertTrue(row.isHittable, id)
-            // The switch control inside the row, which is what a tap toggles.
+            // The switch control inside the row, which is what a tap toggles. On a short screen the row's center can be
+            // visible while the control, lower in the tall row, is not yet.
             let control = row.switches.firstMatch
+            for _ in 0..<8 where !(row.isHittable && control.isHittable) { app.swipeUp() }
+            XCTAssertTrue(row.isHittable, id)
             XCTAssertTrue(control.isHittable, "\(id) switch")
             let before = row.value as? String
             control.tap()
@@ -122,6 +126,9 @@ final class AccessibilityUITests: XCTestCase {
     ///   15.7:1 for it. With `.scrollEdgeEffectHidden(true, for: .top)` the audit passes, and comparing the two
     ///   screenshots shows the effect changes pixels down to y 147, 31 pt below the bar (it slightly darkens the
     ///   background, so the label's contrast is 15.2:1 without it). Light appearance doesn't report the label.
+    /// - Any issue on an element that isn't fully inside the window. On a short screen (iPhone Duo's outer display, 678 pt
+    ///   tall) the "Report a problem" row starts at y 676 and the audit measures its 2 pt visible edge. Each screen is
+    ///   also audited scrolled to the bottom, so every row is audited once it is fully on screen.
     /// - `.dynamicType` on the Home navigation rows (Report a problem, Sites, About). They're standard
     ///   List rows in the body text style, and `testHomeRowsScaleAtLargestAccessibilitySize` shows they grow with the
     ///   text size, so the report is a false positive.
@@ -136,6 +143,7 @@ final class AccessibilityUITests: XCTestCase {
         let navBar = scrolledUnderNavBar && bar.exists ? bar.frame : .null
         let barTexts = navBar.isNull ? [] : bar.descendants(matching: .any).allElementsBoundByIndex.map(\.frame)
         let scalingRows = Self.homeRows.map { app.buttons[$0] }.filter(\.exists).map(\.frame)
+        let window = app.windows.firstMatch.frame
         var issues: [String] = []
         var headerFooterFiltered = 0
         try app.performAccessibilityAudit { issue in
@@ -154,6 +162,9 @@ final class AccessibilityUITests: XCTestCase {
             if issue.auditType == .contrast, element?.elementType == .staticText, !navBar.isNull,
                frame.minY < navBar.maxY + Self.scrollEdgeEffectDepth,
                !barTexts.contains(frame) {
+                return true
+            }
+            if let element, !window.isEmpty, !window.contains(element.frame) {
                 return true
             }
             if issue.auditType == .dynamicType, scalingRows.contains(where: { $0.insetBy(dx: -1, dy: -1).contains(frame) }) {
@@ -211,6 +222,8 @@ final class AccessibilityUITests: XCTestCase {
         let app = launch(["-uitest-onboarded"])
         XCTAssertTrue(app.buttons["home.status"].waitForExistence(timeout: 10))
         try audit(app, "Home (not set up)")
+        app.swipeUp()
+        try audit(app, "Home (not set up, bottom)", scrolledUnderNavBar: true)
     }
 
     @MainActor
@@ -222,8 +235,11 @@ final class AccessibilityUITests: XCTestCase {
         app.buttons["onboarding.setup"].tap()
         XCTAssertTrue(app.buttons["onboarding.openSettings"].waitForExistence(timeout: 5))
         try audit(app, "Onboarding enable")
-        app.buttons["I've done this"].tap()
+        app.buttons["onboarding.enable.next"].tap()
+        XCTAssertTrue(app.buttons["onboarding.openSafari"].waitForExistence(timeout: 5))
+        try audit(app, "Onboarding Safari")
+        app.buttons["onboarding.safari.next"].tap()
         XCTAssertTrue(app.buttons["onboarding.done"].waitForExistence(timeout: 5))
-        try audit(app, "Onboarding verify")
+        try audit(app, "Onboarding check")
     }
 }

@@ -1,11 +1,12 @@
 import SettingsKit
 import SwiftUI
 
-/// First-launch onboarding: welcome, enable in Safari, verify. Skippable after step 2: "Done" on the
-/// verify step is always available.
+/// First-launch onboarding: welcome, turn on in Settings, allow on websites in Safari, check. "Done" on the check is
+/// always available, so it can be finished before both checks pass.
 struct OnboardingView: View {
-    enum Step: Hashable {
-        case welcome, enable, verify
+    enum Step: Hashable, Identifiable {
+        case welcome, enable, safari, verify
+        var id: Self { self }
     }
 
     var start: Step = .welcome
@@ -26,10 +27,52 @@ struct OnboardingView: View {
         case .welcome:
             WelcomeStep { path.append(.enable) }
         case .enable:
-            EnableStep { path.append(.verify) }
+            EnableStep { path.append(.safari) }
+                .modifier(OnboardingBack(action: goBack))
+        case .safari:
+            SafariStep { path.append(.verify) }
+                .modifier(OnboardingBack(action: goBack))
         case .verify:
             VerifyStep(onDone: onFinish)
+                .modifier(OnboardingBack(action: goBack))
         }
+    }
+
+    private func goBack() {
+        if !path.isEmpty { path.removeLast() }
+    }
+}
+
+/// Onboarding's own back button. On iPhone Duo's outer display the system back button moves to a side rail and has no
+/// accessibility label, so the steps hide it and show this labelled one. Hiding the system button also turns off its
+/// edge swipe, so a drag that starts at the leading edge goes back too.
+private struct OnboardingBack: ViewModifier {
+    var action: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: action) {
+                        // At least 44 × 44 pt to tap, also in the Duo's narrow side rail.
+                        Image(systemName: "chevron.backward")
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .accessibilityLabel("Back")
+                    .accessibilityIdentifier("onboarding.back")
+                }
+            }
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 20)
+                    .onEnded { drag in
+                        if drag.startLocation.x < 24, drag.translation.width > 80,
+                           abs(drag.translation.height) < abs(drag.translation.width) {
+                            action()
+                        }
+                    }
+            )
     }
 }
 
@@ -71,6 +114,9 @@ struct OnboardingPage<Content: View, Actions: View>: View {
             .frame(maxWidth: 560)
             .padding(.horizontal, 24)
             .padding(.vertical, 16)
+            // Opaque, so a step taller than the screen scrolls under the buttons instead of showing through them.
+            .frame(maxWidth: .infinity)
+            .background(Color(.systemBackground))
         }
         .toolbarTitleDisplayMode(.inline)
     }

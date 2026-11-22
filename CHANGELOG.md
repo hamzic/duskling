@@ -1,19 +1,27 @@
 # Changelog
 
-## 1.0.1
+All notable changes to Duskling are documented here. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- Setup now covers the step many people missed: after turning Duskling on in Settings, Safari still has to be allowed
-  on websites (the menu button in the address bar › Duskling › Always Allow… › Always Allow on Every Website). A new setup page
-  shows where, with pictures.
-- Setup ends with a check that updates by itself: "Turned on in Settings" and "Allowed on websites". Home shows
-  "Needs website access" when only the first is done, and opens setup at the Safari step.
-- Welcome shows a light page turning dark, and the Settings step shows what Duskling's page in Settings looks like.
-- "Report a problem" opens the project's GitHub issues instead of an email.
-- iPhone Duo: works on the outer display, with a labelled back button in setup.
+## [1.0.1] - 2026-11-21
 
-## 1.0.0
+### Added
+
+- Setup step that shows how to allow Duskling on websites in Safari.
+- Check at the end of setup that shows when everything works.
+- iPhone Duo support.
+
+### Changed
+
+- Home shows "Needs website access" when Safari access is missing.
+- "Report a problem" opens GitHub issues instead of email.
+
+## [1.0.0] - 2026-11-20
 
 First release.
+
+### Added
 
 - Dark mode for every website in Safari on iPhone and iPad, built from each site's own colors.
 - Three themes: Dark, Midnight and Dim.
@@ -22,3 +30,6 @@ First release.
 - Uses a site's own dark theme when it has one.
 - Companion app with setup, global settings and the list of sites you changed, synced through iCloud.
 - Report a broken site by email, with the host name only.
+
+[1.0.1]: https://github.com/hamzic/duskling/releases/tag/v1.0.1
+[1.0.0]: https://github.com/hamzic/duskling/commit/b87fbab

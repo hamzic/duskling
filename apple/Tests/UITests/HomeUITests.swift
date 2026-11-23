@@ -43,7 +43,7 @@ final class HomeUITests: XCTestCase {
     @MainActor
     func testSitesListShowsSeededRulesAndSwipeDeletes() {
         let app = launch(["-uitest-seed-sites"])
-        app.buttons["home.sites"].tap()
+        app.scrollHome(to: app.buttons["home.sites"]).tap()
         let first = app.staticTexts["example.com"]
         let second = app.staticTexts["news.example.org"]
         XCTAssertTrue(first.waitForExistence(timeout: 5))
@@ -59,15 +59,14 @@ final class HomeUITests: XCTestCase {
     @MainActor
     func testSitesEmptyState() {
         let app = launch()
-        app.buttons["home.sites"].tap()
+        app.scrollHome(to: app.buttons["home.sites"]).tap()
         XCTAssertTrue(app.staticTexts["Sites you change in Safari appear here."].waitForExistence(timeout: 5))
     }
 
     @MainActor
     func testAboutShowsVersionAndDarkReaderNotice() {
         let app = launch()
-        let about = app.buttons["home.about"]
-        if !about.isHittable { app.swipeUp() }
+        let about = app.scrollHome(to: app.buttons["home.about"])
         about.tap()
         let version = app.staticTexts["about.version"]
         XCTAssertTrue(version.waitForExistence(timeout: 5))
@@ -83,8 +82,7 @@ final class HomeUITests: XCTestCase {
     @MainActor
     func testHomeHasNoTipJar() {
         let app = launch()
-        let about = app.buttons["home.about"]
-        if !about.isHittable { app.swipeUp() }
+        let about = app.scrollHome(to: app.buttons["home.about"])
         XCTAssertTrue(about.exists)
         XCTAssertFalse(app.buttons["home.tips"].exists)
         XCTAssertFalse(app.buttons["Support development"].exists)

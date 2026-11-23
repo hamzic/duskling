@@ -4,6 +4,12 @@ All notable changes to Duskling are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-11-22
+
+### Changed
+
+- Same app as 1.0.1, released again to add iPhone Duo screenshots and shorter release notes to the App Store.
+
 ## [1.0.1] - 2026-11-21
 
 ### Added
@@ -31,5 +37,6 @@ First release.
 - Companion app with setup, global settings and the list of sites you changed, synced through iCloud.
 - Report a broken site by email, with the host name only.
 
+[1.0.2]: https://github.com/hamzic/duskling/releases/tag/v1.0.2
 [1.0.1]: https://github.com/hamzic/duskling/releases/tag/v1.0.1
 [1.0.0]: https://github.com/hamzic/duskling/commit/b87fbab

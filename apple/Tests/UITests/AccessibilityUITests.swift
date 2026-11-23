@@ -47,7 +47,7 @@ final class AccessibilityUITests: XCTestCase {
     func testHomeControlsHaveLabels() {
         let app = launchHome()
         assertInteractiveElementsLabelled(app, "Home (top)")
-        app.swipeUp()
+        app.homeList.swipeUp()
         assertInteractiveElementsLabelled(app, "Home (bottom)")
     }
 
@@ -89,7 +89,7 @@ final class AccessibilityUITests: XCTestCase {
             // The switch control inside the row, which is what a tap toggles. On a short screen the row's center can be
             // visible while the control, lower in the tall row, is not yet.
             let control = row.switches.firstMatch
-            for _ in 0..<8 where !(row.isHittable && control.isHittable) { app.swipeUp() }
+            app.scrollHome(to: control)
             XCTAssertTrue(row.isHittable, id)
             XCTAssertTrue(control.isHittable, "\(id) switch")
             let before = row.value as? String
@@ -129,9 +129,10 @@ final class AccessibilityUITests: XCTestCase {
     /// - Any issue on an element that isn't fully inside the window. On a short screen (iPhone Duo's outer display, 678 pt
     ///   tall) the "Report a problem" row starts at y 676 and the audit measures its 2 pt visible edge. Each screen is
     ///   also audited scrolled to the bottom, so every row is audited once it is fully on screen.
-    /// - `.dynamicType` on the Home navigation rows (Report a problem, Sites, About). They're standard
+    /// - `.dynamicType` and `.textClipped` on the Home navigation rows (Report a problem, Sites, About). They're standard
     ///   List rows in the body text style, and `testHomeRowsScaleAtLargestAccessibilitySize` shows they grow with the
-    ///   text size, so the report is a false positive.
+    ///   text size, so the report is a false positive. `.textClipped` comes from the sidebar on iPhone Duo's inner
+    ///   display (iOS 27.2), where About shows in full at the largest accessibility size.
     @MainActor
     private func audit(_ app: XCUIApplication, _ screen: String, scrolledUnderNavBar: Bool = false,
                        file: StaticString = #filePath, line: UInt = #line) throws {
@@ -167,7 +168,7 @@ final class AccessibilityUITests: XCTestCase {
             if let element, !window.isEmpty, !window.contains(element.frame) {
                 return true
             }
-            if issue.auditType == .dynamicType, scalingRows.contains(where: { $0.insetBy(dx: -1, dy: -1).contains(frame) }) {
+            if issue.auditType == .dynamicType || issue.auditType == .textClipped, scalingRows.contains(where: { $0.insetBy(dx: -1, dy: -1).contains(frame) }) {
                 return true
             }
             let description = element.map { "\($0.elementType.rawValue) '\($0.label)' id=\($0.identifier) \($0.frame)" } ?? "none"
@@ -189,7 +190,7 @@ final class AccessibilityUITests: XCTestCase {
         let regular = launchHome()
         let regularHeights = Dictionary(uniqueKeysWithValues: Self.homeRows.map { id in
             let row = regular.buttons[id]
-            for _ in 0..<4 where !row.isHittable { regular.swipeUp() }
+            regular.scrollHome(to: row, maxSwipes: 4)
             return (id, row.frame.height)
         })
         regular.terminate()
@@ -197,7 +198,7 @@ final class AccessibilityUITests: XCTestCase {
         let app = launchHome(["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"])
         for id in Self.homeRows {
             let row = app.buttons[id]
-            for _ in 0..<10 where !row.isHittable { app.swipeUp() }
+            app.scrollHome(to: row, maxSwipes: 10)
             XCTAssertGreaterThan(row.frame.height, regularHeights[id]! * 1.5, id)
         }
     }
@@ -212,7 +213,7 @@ final class AccessibilityUITests: XCTestCase {
         try skipUnlessPhone()
         let app = launchHome()
         try audit(app, "Home (top)")
-        app.swipeUp()
+        app.homeList.swipeUp()
         try audit(app, "Home (bottom)", scrolledUnderNavBar: true)
     }
 
@@ -222,7 +223,7 @@ final class AccessibilityUITests: XCTestCase {
         let app = launch(["-uitest-onboarded"])
         XCTAssertTrue(app.buttons["home.status"].waitForExistence(timeout: 10))
         try audit(app, "Home (not set up)")
-        app.swipeUp()
+        app.homeList.swipeUp()
         try audit(app, "Home (not set up, bottom)", scrolledUnderNavBar: true)
     }
 

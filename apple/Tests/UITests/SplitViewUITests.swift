@@ -19,7 +19,8 @@ final class SplitViewUITests: XCTestCase {
         XCTAssertTrue(toggle.waitForExistence(timeout: 10))
         // The layout follows the size class, not the device: MainView splits on regular width.
         // https://developer.apple.com/documentation/xcuiautomation/xcuielementattributes/horizontalsizeclass
-        try XCTSkipUnless(app.horizontalSizeClass == .regular, "The split view is the regular-width layout.")
+        // Read it from the window: on iOS 26.5 the application element reports .unspecified on iPad, the window .regular.
+        try XCTSkipUnless(app.windows.firstMatch.horizontalSizeClass == .regular, "The split view is the regular-width layout.")
 
         // Sites is selected at launch and shown next to the sidebar.
         let site = app.staticTexts["example.com"]

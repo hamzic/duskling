@@ -63,6 +63,14 @@ describe("parseColor", () => {
     expect(rgb("color(srgb 0 0.5 1 / 0.5)")).toEqual({ r: 0, g: 128, b: 255, a: 0.5 });
   });
 
+  it("parses color(display-p3), converted to sRGB and clamped to its gamut", () => {
+    // Expected values: CSS Color 4 sample code (lin_P3_to_XYZ, then XYZ_to_lin_sRGB), computed independently.
+    expect(rgb("color(display-p3 1 1 1)")).toEqual({ r: 255, g: 255, b: 255, a: 1 });
+    expect(rgb("color(display-p3 0.2 0.6 0.4)")).toEqual({ r: 0, g: 156, b: 97, a: 1 });
+    expect(rgb("color(display-p3 1 0 0 / 0.5)")).toEqual({ r: 255, g: 0, b: 0, a: 0.5 });
+    expect(rgb("color(display-p3 100% 100% 100%)")).toEqual({ r: 255, g: 255, b: 255, a: 1 });
+  });
+
   it("treats none channels as 0", () => {
     expect(rgb("rgb(none 20 30)")).toEqual({ r: 0, g: 20, b: 30, a: 1 });
     expect(rgb("oklch(1 none none)")).toEqual({ r: 255, g: 255, b: 255, a: 1 });
@@ -70,7 +78,7 @@ describe("parseColor", () => {
   });
 
   it("returns null for invalid or unsupported input", () => {
-    for (const bad of ["#ggg", "#12", "rgb(1,2)", "var(--x)", "color-mix(in srgb, red, blue)", "notacolor", "", "currentcolor", "inherit", "color(display-p3 1 0 0)"]) {
+    for (const bad of ["#ggg", "#12", "rgb(1,2)", "var(--x)", "color-mix(in srgb, red, blue)", "notacolor", "", "currentcolor", "inherit", "color(rec2020 1 0 0)"]) {
       expect(parseColor(bad)).toBeNull();
     }
   });

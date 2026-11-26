@@ -120,12 +120,31 @@ function labToRgba(L: number, a: number, b: number, alpha: number): RGBA {
   return { r: clamp255(fromLinear(lin[0])), g: clamp255(fromLinear(lin[1])), b: clamp255(fromLinear(lin[2])), a: alpha };
 }
 
+// display-p3 (sRGB transfer function, P3 primaries, D65) -> linear P3 -> linear sRGB, clamped to the sRGB gamut. The
+// matrix is lin_P3_to_XYZ followed by XYZ_to_lin_sRGB from the CSS Color 4 sample code,
+// https://www.w3.org/TR/css-color-4/#color-conversion-code (both D65, so no adaptation).
+function p3ToRgba([r, g, b]: [number, number, number], alpha: number): RGBA {
+  const lin = (v: number): number => {
+    const a = Math.abs(v);
+    return a <= 0.04045 ? v / 12.92 : Math.sign(v) * ((a + 0.055) / 1.055) ** 2.4;
+  };
+  const [R, G, B] = [lin(r), lin(g), lin(b)];
+  return {
+    r: clamp255(fromLinear(1.2249401762805596 * R - 0.22494017628055993 * G)),
+    g: clamp255(fromLinear(-0.04205695470968818 * R + 1.042056954709688 * G)),
+    b: clamp255(fromLinear(-0.019637554590334436 * R - 0.0786360455506319 * G + 1.0982736001409663 * B)),
+    a: alpha,
+  };
+}
+
 const FN_ARGS = /^([a-z-]+)\(\s*(.*?)\s*\)$/;
 
 function parseFunction(name: string, inner: string): RGBA | null {
   let toks = inner.split(/[\s,/]+/).filter(Boolean);
+  let space = "";
   if (name === "color") {
-    if (toks[0] !== "srgb") return null;
+    space = toks[0] ?? "";
+    if (space !== "srgb" && space !== "display-p3") return null;
     toks = toks.slice(1);
   }
   if (toks.length !== 3 && toks.length !== 4) return null;
@@ -141,6 +160,10 @@ function parseFunction(name: string, inner: string): RGBA | null {
       return c && { r: c[0], g: c[1], b: c[2], a: alpha };
     }
     case "color": {
+      if (space === "display-p3") {
+        const c = map3([t0, t1, t2], (x) => x.v);
+        return c && p3ToRgba(c, alpha);
+      }
       const c = map3([t0, t1, t2], (x) => clamp255(x.v * 255));
       return c && { r: c[0], g: c[1], b: c[2], a: alpha };
     }

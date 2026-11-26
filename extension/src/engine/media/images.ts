@@ -579,7 +579,11 @@ export class ImageStyler {
     return out;
   }
 
-  /** Samples `url` once (32×32). A same-origin `<img>` is drawn directly; anything else is decoded from the URL. */
+  /**
+   * Samples `url` once (32×32). A same-origin `<img>` is drawn directly; anything else is decoded from the URL. An `<img>`
+   * needs only the sample, so its fetched source (a full copy of the image as a data URL) is dropped once sampled; a
+   * background image's is kept, since its replacement is drawn from it again for each theme.
+   */
   private analyzeUrl(url: string, img: HTMLImageElement | null, priority: number): Promise<Sample | null> {
     let s = this.samples.get(url);
     if (!s) {
@@ -588,9 +592,11 @@ export class ImageStyler {
         s = Promise.resolve(px && { px, w: img.naturalWidth, h: img.naturalHeight });
       } else {
         s = limited(priority, async () => {
-          const src = await sourceOf(url, this.deps.fetchBlobUrl);
+          const pending = sourceOf(url, this.deps.fetchBlobUrl);
+          const src = await pending;
           const el = src && (await decode(src.src));
           const px = el && sample(el);
+          if (img && sources.get(url) === pending) sources.delete(url);
           return px && el ? { px, w: el.naturalWidth, h: el.naturalHeight } : null;
         });
       }

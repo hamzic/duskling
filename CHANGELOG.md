@@ -4,6 +4,16 @@ All notable changes to Duskling are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2026-11-26
+
+### Fixed
+
+- Colors written as `color(display-p3 …)` are now made dark. Before, such a background stayed white while its text was lightened.
+
+### Changed
+
+- Less memory used on pages with many images from other sites.
+
 ## [1.0.2] - 2026-11-22
 
 ### Changed
@@ -37,6 +47,7 @@ First release.
 - Companion app with setup, global settings and the list of sites you changed, synced through iCloud.
 - Report a broken site by email, with the host name only.
 
+[1.0.3]: https://github.com/hamzic/duskling/releases/tag/v1.0.3
 [1.0.2]: https://github.com/hamzic/duskling/releases/tag/v1.0.2
 [1.0.1]: https://github.com/hamzic/duskling/releases/tag/v1.0.1
 [1.0.0]: https://github.com/hamzic/duskling/commit/b87fbab

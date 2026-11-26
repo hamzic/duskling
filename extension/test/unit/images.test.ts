@@ -184,6 +184,27 @@ describe("ImageStyler", () => {
     expect(img.hasAttribute("data-dusk-img")).toBe(false);
   });
 
+  it("a fetched <img> source isn't kept once it has been sampled", async () => {
+    // Only the 32×32 sample (cached per styler) is needed for an <img> marker; the fetched data URL is a full copy of
+    // the image. Seen from outside: a later styler (a fresh sample cache) fetches it again rather than reusing it.
+    const fetchBlobUrl = vi.fn(async () => ({ dataUrl: "data:image/png;base64,AAAA", corsOk: true }));
+    const show = () => {
+      document.body.innerHTML = '<img id="i" src="https://cdn.other.test/released.png">';
+      const img = document.getElementById("i") as HTMLImageElement;
+      Object.defineProperty(img, "complete", { value: true });
+      img.getBoundingClientRect = () => ({ x: 0, y: 0, top: 0, left: 0, right: 24, bottom: 24, width: 24, height: 24, toJSON: () => ({}) }) as DOMRect;
+    };
+    for (let i = 0; i < 2; i++) {
+      show();
+      s = new ImageStyler(document, { fetchBlobUrl, schedule: now });
+      s.start();
+      for (let t = 0; t < 4; t++) await tick();
+      s.stop();
+    }
+    s = null;
+    expect(fetchBlobUrl).toHaveBeenCalledTimes(2);
+  });
+
   it("imageUrl() never fetches: a url() in a rule no element shows (other breakpoint, :hover, unused sprite) isn't loaded", async () => {
     // Re-fetches only for resources the page already loads. Only elements' computed backgrounds start analysis.
     const fetchBlobUrl = vi.fn(async () => null);
